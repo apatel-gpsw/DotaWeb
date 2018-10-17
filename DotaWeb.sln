@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaWeb", "DotaWeb\DotaWeb.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotaWeb.Tests", "DotaWeb.Tests\DotaWeb.Tests.csproj", "{36CACC16-96D8-4DDA-B6CB-FD5BD38899FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamAuth", "..\SteamAuth\SteamAuth\SteamAuth.csproj", "{5AD0934E-F6C4-4AE5-83AF-C788313B2A87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{36CACC16-96D8-4DDA-B6CB-FD5BD38899FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36CACC16-96D8-4DDA-B6CB-FD5BD38899FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36CACC16-96D8-4DDA-B6CB-FD5BD38899FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AD0934E-F6C4-4AE5-83AF-C788313B2A87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AD0934E-F6C4-4AE5-83AF-C788313B2A87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AD0934E-F6C4-4AE5-83AF-C788313B2A87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AD0934E-F6C4-4AE5-83AF-C788313B2A87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
