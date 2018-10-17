@@ -15,7 +15,7 @@ namespace DotaWeb.Controllers
 
 		public ActionResult About()
 		{
-			ViewBag.Message = "Your application description page.";
+			ViewBag.Message = "About the author: https://github.com/apatel-gpsw";
 
 			return View();
 		}

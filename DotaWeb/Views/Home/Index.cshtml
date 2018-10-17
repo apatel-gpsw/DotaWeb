@@ -1,44 +1,102 @@
 ﻿@{
 	ViewBag.Title = "Home Page";
 }
+<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.intellisense.js"></script>
+<script>
+	$(document).ready(function () {
+		var tabledata = [];
+		$('#searchButton').click(function (event) {
+			var isValid = true;
+			var errorList = [];
+			errorList.push('Enter a valid Match ID or Player ID.');
 
+			var table = $('#fieldTable');
+			table.find('tr').each(function (rowIndex, r) {
+				var cols = [];
+				var rowName = $(this).find(".label-item").text().trim();
+				// I chose not to go to each <td> element as each row has teh same set of controls
+				//$(this).find('td').each(function (colIndex, c) {
+				//	if (c.tagName === 'TD') {
+				var labelControl = $(this).find("td .label-item");
+				if (typeof labelControl !== "undefined" && labelControl.text().trim() !== "undefined" && labelControl.text().trim() !== "") {
+					cols.push(labelControl.text().trim());
+				}
+
+				var dropdownControl = $(this).find("td .dropdown-item > select");
+				var checkboxControl = $(this).find("td .checkbox-item > input");
+
+				// If checkbox is checked, select TextBox
+				if (typeof checkboxControl !== "undefined") {
+					if (checkboxControl.is(':checked')) {
+						var textboxControl = $(this).find("td .textbox-item > input");
+						if (typeof textboxControl === "undefined" || textboxControl.val() === "") {
+							errorList.push('Line#: ' + (rowIndex + 1) + ': ' + rowName);
+							isValid = false;
+						}
+						else {
+							cols.push(textboxControl.val());
+						}
+					}
+					else {
+						if (typeof dropdownControl === "undefined" || dropdownControl.val() === "") {
+							errorList.push('Line#: ' + (rowIndex + 1) + ': ' + rowName);
+							isValid = false;
+						}
+						else {
+							if (typeof dropdownControl.val() !== "undefined") {
+								cols.push(dropdownControl.val());
+							}
+						}
+					}
+				}
+				//	}
+				//});
+				tabledata.push(cols);
+			});
+
+			if (!isValid) {
+				errorList.push('\nEither select a value from dropdown or check the box and provide a Custom Field Name.')
+				alert(errorList.join("\n"));
+				event.preventDefault();
+			}
+			else {
+				tabledata = tabledata.slice(0);
+				tabledata.splice(0, 1);
+
+				$.ajax({
+					type: "POST",
+					url: "/FieldsMapping/Export",
+					contentType: 'application/json',
+					dataType: "json",
+					data: JSON.stringify({ 'exportData': tabledata }),
+					success: function (returnValue) {
+						window.location = '/FieldsMapping/Download?file=' + returnValue.FileName;
+						alert('Downloading File...');
+					}
+				});
+			}
+		});
+	});
+</script>
 <div class="jumbotron">
 	<h1>Search match/player</h1>
-	<div class="form-group">
-		@Html.Label("Match ID", "Match ID")
-		<div class="col-md-10">
-			@Html.TextBox("Match ID", null)
+	<div class="form-horizontal">
+		<div class="form-group">
+			@Html.Label("Match ID", "Match ID", new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+				@Html.TextBox("Match ID", null, new { @class = "form-control" })
+			</div>
 		</div>
-	</div>
-	<div class="form-group">
-		@Html.Label("Player ID", "Player ID")
-		<div class="col-md-10">
-			@Html.TextBox("Player ID", null)
+		<div class="form-group">
+			@Html.Label("Player ID", "Player ID", new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+				@Html.TextBox("Player ID", null, new { @class = "form-control" })
+			</div>
 		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-md-10">
-			<input type="submit" value="Search &raquo;" class="btn btn-primary btn-lg">
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" id="searchButton" value="Search &raquo;" class="btn btn-primary btn-lg">
+			</div>
 		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-md-4">
-		<h2>Dota Api Peoject</h2>
-		<p>The back-end where data is fetched using Steam APIs.</p>
-		<p><a class="btn btn-default" href="https://github.com/apatel-gpsw/DotaApi">Learn more &raquo;</a></p>
-	</div>
-	<div class="col-md-4">
-		<h2>Dota Web Project</h2>
-		<p>
-			An ASP.NET MVC website that shows statistics of players/games.
-		</p>
-		<p><a class="btn btn-default" href="https://github.com/apatel-gpsw/DotaWeb">Learn more &raquo;</a></p>
-	</div>
-	<div class="col-md-4">
-		<h2>Steam Authentication Project</h2>
-		<p>Cloned from the <a href="https://github.com/geel9">geel9</a></p>
-		<p><a class="btn btn-default" href="https://github.com/geel9/SteamAuth">Learn more &raquo;</a></p>
 	</div>
 </div>
