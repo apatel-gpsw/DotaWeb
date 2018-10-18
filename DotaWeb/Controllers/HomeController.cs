@@ -13,6 +13,12 @@ namespace DotaWeb.Controllers
 			return View();
 		}
 
+		public ActionResult GetMatchData(string matchID, string playerID)
+		{
+
+			return View();
+		}
+
 		public ActionResult About()
 		{
 			ViewBag.Message = "About the author: https://github.com/apatel-gpsw";
