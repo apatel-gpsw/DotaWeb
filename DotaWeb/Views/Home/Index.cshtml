@@ -1,68 +1,126 @@
-﻿@model DotaWeb.Models.MatchDataModel
-	@{
-		ViewBag.Title = "Home Page";
-	}
-	<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.intellisense.js"></script>
-	<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
-	<script>
-		$(document).ready(function () {
-			$('#searchButton').click(function (event) {
-				var isValid = false;
-				var errorList = [];
-				errorList.push('Enter a valid Match ID or Player ID.');
+﻿@model DotaWeb.Models.MatchDetailsModel
+@{
+	ViewBag.Title = "Home Page";
+}
+<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.intellisense.js"></script>
+<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('#searchButton').click(function (event) {
+			var isValid = false;
+			var errorList = [];
+			errorList.push('Enter a valid Match ID or Player ID.');
 
-				var matchID = $('#matchID').val();
-				var playerID = $('#playerID').val();
+			var matchID = $('#matchID').val();
+			var playerID = $('#playerID').val();
 
-				if (!matchID && !playerID)
-					alert("Please enter and ID in at least one of the textboxes.");
-				else if (!$.isNumeric(matchID) && !$.isNumeric(playerID))
-					alert("Only numeric values are allowed.")
-				else
-					isValid = true;
+			if (!matchID && !playerID)
+				alert("Please enter and ID in at least one of the textboxes.");
+			else if (!$.isNumeric(matchID) && !$.isNumeric(playerID))
+				alert("Only numeric values are allowed.")
+			else
+				isValid = true;
 
-				if (isValid) {
-					$.ajax({
-						type: "POST",
-						url: "/Home/GetMatchData",
-						contentType: 'application/json',
-						dataType: "json",
-						data: JSON.stringify({
-							'matchID': matchID, 'playerID': playerID
-						}),
-						success: function (returnValue) {
-							alert('Success');
-						}
-					});
-				}
-			});
+			if (isValid) {
+				$.ajax({
+					type: "POST",
+					url: "/Home/GetMatchData",
+					contentType: 'application/json',
+					dataType: "json",
+					data: JSON.stringify({
+						'matchID': matchID, 'playerID': playerID
+					}),
+					success: function (returnValue) {
+						alert('Success');
+					}
+				});
+			}
 		});
-	</script>
+	});
+</script>
 
-	<div class="jumbotron">
-		<h1>Search match/player</h1>
-		<div class="form-horizontal">
-			<div class="form-group">
-				@Html.Label("Match ID", "Match ID", new { @class = "col-md-2 control-label" })
-				<div class="col-md-10">
-					@Html.TextBox("Match ID", null, new { @id = "matchID", @class = "form-control" })
-				</div>
+<div class="jumbotron">
+	<h1>Search match/player</h1>
+	<div class="form-horizontal">
+		<div class="form-group">
+			@Html.Label("Match ID", "Match ID", new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+				@Html.TextBox("Match ID", null, new { @id = "matchID", @class = "form-control" })
 			</div>
-			<div class="form-group">
-				@Html.Label("Player ID", "Player ID", new { @class = "col-md-2 control-label" })
-				<div class="col-md-10">
-					@Html.TextBox("Player ID", null, new { @id = "playerID", @class = "form-control" })
-				</div>
+		</div>
+		<div class="form-group">
+			@Html.Label("Player ID", "Player ID", new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+				@Html.TextBox("Player ID", null, new { @id = "playerID", @class = "form-control" })
 			</div>
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-10">
-					<input type="submit" id="searchButton" value="Search &raquo;" class="btn btn-primary btn-lg">
-				</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" id="searchButton" value="Search &raquo;" class="btn btn-primary btn-lg">
 			</div>
 		</div>
 	</div>
+</div>
 
-	<div>
-
-	</div>
+<div>
+	<table id="fieldTable" class="table" width="500">
+		<tr>
+			<th>
+				Player
+			</th>
+			<th>
+				Hero
+			</th>
+			<th>
+				Kills
+			</th>
+			<th>
+				Deaths
+			</th>
+			<th>
+				Assists
+			</th>
+			<th>
+				Net Worth
+			</th>
+			<th>
+				LH/DN
+			</th>
+			<th>
+				GPM/XPM
+			</th>
+			<th>
+				Damage
+			</th>
+			<th>
+				Heal
+			</th>
+		</tr>
+		@{
+			foreach (var item in Model.Players)
+			{
+				<tr>
+					<td>
+						<div class="label-item">
+							@Html.DisplayFor(modelItem => item.IncomingFieldName)
+						</div>
+					</td>
+					<td>
+						<div class="dropdown-item">
+							@Html.DropDownListFor(modelItem => item.SystemFields, new SelectList(item.SystemFields), new { @id = "ddl" + item.IncomingFieldName })
+						</div>
+					</td>
+					<td>
+						<div class="checkbox-item">
+							@Html.CheckBox("isCustom", false, new { @id = "isCustom" + item.IncomingFieldName })
+						</div>
+						<div class="textbox-item">
+							@Html.TextBox("customFieldText", "", new { @readonly = "readonly", @id = "customFieldText" + item.IncomingFieldName })
+						</div>
+					</td>
+				</tr>
+			}
+		}
+	</table>
+</div>
 
