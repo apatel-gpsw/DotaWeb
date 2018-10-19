@@ -61,98 +61,101 @@
 		</div>
 	</div>
 </div>
-
-<div>
-	<table id="fieldTable" class="table" width="500">
-		<tr>
-			<th>
-				Player
-			</th>
-			<th>
-				Hero
-			</th>
-			<th>
-				Kills
-			</th>
-			<th>
-				Deaths
-			</th>
-			<th>
-				Assists
-			</th>
-			<th>
-				Net Worth
-			</th>
-			<th>
-				LH/DN
-			</th>
-			<th>
-				GPM/XPM
-			</th>
-			<th>
-				Damage (Hero/Tower)
-			</th>
-			<th>
-				Heal
-			</th>
-		</tr>
-		@{
-			foreach (var item in Model.Players)
-			{
+@{
+	if (@ViewBag.ShowList)
+	{
+		<div>
+			<table id="fieldTable" class="table" width="500">
 				<tr>
-					<td>
-						<div class="label-item">
-							@Html.DisplayFor(modelItem => item.PlayerName)
-						</div>
-					</td>
-					<td>
-						<div class="label-item">
-							@Html.DisplayFor(modelItem => item.Name)
-						</div>
-					</td>
-					<td>
-						<div class="label-item">
-							@Html.DisplayFor(modelItem => item.Kills)
-						</div>
-					</td>
-					<td>
-						<div class="label-item">
-							@Html.DisplayFor(modelItem => item.Deaths)
-						</div>
-					</td>
-					<td>
-						<div class="label-item">
-							@Html.DisplayFor(modelItem => item.Assists)
-						</div>
-					</td>
-					<td>
-						<div class="label-item">
-							@Html.DisplayFor(modelItem => item.Gold * Model.Duration)
-						</div>
-					</td>
-					<td>
-						<div class="label-item">
-							@Html.DisplayFor(modelItem => item.Last_Hits + "/" + item.Denies)
-						</div>
-					</td>
-					<td>
-						<div class="label-item">
-							@Html.DisplayFor(modelItem => item.Gold_Per_Min + "/" + item.Xp_Per_Min)
-						</div>
-					</td>
-					<td>
-						<div class="label-item">
-							@Html.DisplayFor(modelItem => item.Hero_Damage + "/" + item.Tower_Damage)
-						</div>
-					</td>
-					<td>
-						<div class="label-item">
-							@Html.DisplayFor(modelItem => item.Hero_Healing)
-						</div>
-					</td>
+					<th>
+						Player
+					</th>
+					<th>
+						Hero
+					</th>
+					<th>
+						Kills
+					</th>
+					<th>
+						Deaths
+					</th>
+					<th>
+						Assists
+					</th>
+					<th>
+						Net Worth
+					</th>
+					<th>
+						LH/DN
+					</th>
+					<th>
+						GPM/XPM
+					</th>
+					<th>
+						Damage (Hero/Tower)
+					</th>
+					<th>
+						Heal
+					</th>
 				</tr>
-			}
-		}
-	</table>
-</div>
-
+				@{
+					foreach (var item in Model.Players)
+					{
+						<tr>
+							<td>
+								<div class="label-item">
+									@Html.DisplayFor(modelItem => item.PlayerName)
+								</div>
+							</td>
+							<td>
+								<div class="label-item">
+									@Html.DisplayFor(modelItem => item.Name)
+								</div>
+							</td>
+							<td>
+								<div class="label-item">
+									@Html.DisplayFor(modelItem => item.Kills)
+								</div>
+							</td>
+							<td>
+								<div class="label-item">
+									@Html.DisplayFor(modelItem => item.Deaths)
+								</div>
+							</td>
+							<td>
+								<div class="label-item">
+									@Html.DisplayFor(modelItem => item.Assists)
+								</div>
+							</td>
+							<td>
+								<div class="label-item">
+									@Html.DisplayFor(modelItem => item.Gold * Model.Duration)
+								</div>
+							</td>
+							<td>
+								<div class="label-item">
+									@Html.DisplayFor(modelItem => item.Last_Hits + "/" + item.Denies)
+								</div>
+							</td>
+							<td>
+								<div class="label-item">
+									@Html.DisplayFor(modelItem => item.Gold_Per_Min + "/" + item.Xp_Per_Min)
+								</div>
+							</td>
+							<td>
+								<div class="label-item">
+									@Html.DisplayFor(modelItem => item.Hero_Damage + "/" + item.Tower_Damage)
+								</div>
+							</td>
+							<td>
+								<div class="label-item">
+									@Html.DisplayFor(modelItem => item.Hero_Healing)
+								</div>
+							</td>
+						</tr>
+					}
+				}
+			</table>
+		</div>
+	}
+}

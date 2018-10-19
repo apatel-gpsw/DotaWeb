@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using DotaApi.Helpers;
 
 namespace DotaWeb.Controllers
 {
@@ -6,12 +7,16 @@ namespace DotaWeb.Controllers
 	{
 		public ActionResult Index()
 		{
+			ViewBag.ShowList = false;
 			return View();
 		}
 
 		public ActionResult GetMatchData(string matchID, string playerID)
 		{
-
+			// 4169885095
+			long x = long.Parse(matchID); //Convert.ToInt64()
+			var MatchDetailsModel = CommonExtensions.GetMatchDetail(x);
+			ViewBag.ShowList = true;
 			return View();
 		}
 

@@ -5,7 +5,7 @@ namespace DotaWeb.Models
 {
 	public class MatchDetailsModel
 	{
-		public List<Player> Players { get; set; }
+		public List<MatchDetailsPlayerModel> Players { get; set; }
 		public bool Radiant_Win { get; set; }
 		public int Duration { get; set; }
 		public int Start_Time { get; set; }

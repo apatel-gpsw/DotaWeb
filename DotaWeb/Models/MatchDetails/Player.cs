@@ -2,7 +2,7 @@
 
 namespace DotaWeb.Models
 {
-	public class Player
+	public class MatchDetailsPlayerModel
 	{
 		public string Account_ID { get; set; }
 		public string Name { get; set; }
