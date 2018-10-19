@@ -4,8 +4,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Text;
+using System.Web;
 using DotaApi.Model;
 using DotaWeb.Models;
 using Newtonsoft.Json;
@@ -42,18 +42,11 @@ namespace DotaApi.Helpers
 				match.Lobbytype = lobby;
 			}
 
-			Console.WriteLine($"Match ID: {match.Match_ID}");
-			Console.WriteLine($"Match SeqNum: {match.Match_Seq_Num}");
-			Console.WriteLine($"Human Players: {match.Human_Players}");
-			Console.WriteLine($"Duration: {gameDuration}");
-			Console.WriteLine($"Game Mode: {match.Game_Mode}");
-			Console.WriteLine($"Lobby Type: {match.Lobbytype}");
-
 			foreach (var player in match.Players)
 			{
-				StringBuilder sb = new StringBuilder();
+				//StringBuilder sb = new StringBuilder();
 
-				sb.AppendLine($"\nAccount ID: {player.Account_ID}");
+				//sb.AppendLine($"\nAccount ID: {player.Account_ID}");
 				player.Name = ConvertIDtoName(player.Hero_ID, heroes);
 				player.Steamid64 = StringManipulation.SteamIDConverter(player.Account_ID);
 				player.Steamid32 = StringManipulation.SteamIDConverter64to32(player.Steamid64);
@@ -61,13 +54,13 @@ namespace DotaApi.Helpers
 				SteamAccountPlayerModel steamaccount = GetSteamAccount(player.Account_ID);
 				player.PlayerName = steamaccount.PersonaName;
 
-				sb.AppendLine($"Player Name: {player.PlayerName}");
-				sb.AppendLine($"Hero: {player.Name}");
-				sb.AppendLine($"\tHero Level: {player.Level}");
-				sb.AppendLine($"K/D/A: {player.Kills}/{player.Deaths}/{player.Assists}");
-				sb.AppendLine($"CS: {player.Last_Hits}/{player.Denies}");
-				sb.AppendLine($"\tGPM: {player.Gold_Per_Min}");
-				sb.AppendLine($"\tXPM: {player.Xp_Per_Min}");
+				//sb.AppendLine($"Player Name: {player.PlayerName}");
+				//sb.AppendLine($"Hero: {player.Name}");
+				//sb.AppendLine($"\tHero Level: {player.Level}");
+				//sb.AppendLine($"K/D/A: {player.Kills}/{player.Deaths}/{player.Assists}");
+				//sb.AppendLine($"CS: {player.Last_Hits}/{player.Denies}");
+				//sb.AppendLine($"\tGPM: {player.Gold_Per_Min}");
+				//sb.AppendLine($"\tXPM: {player.Xp_Per_Min}");
 
 				// getting item names based on the id number
 				player.Item0 = player.Item_0 > 0 ? ConvertIDtoName(player.Item_0, items) : null;
@@ -81,30 +74,30 @@ namespace DotaApi.Helpers
 				player.Backpack1 = player.Backpack_1 > 0 ? ConvertIDtoName(player.Backpack_1, items) : null;
 				player.Backpack2 = player.Backpack_2 > 0 ? ConvertIDtoName(player.Backpack_2, items) : null;
 
-				sb.AppendLine("Items:");
-				if (!string.IsNullOrEmpty(player.Item0))
-					sb.Append($"Slot 1: {player.Item0}");
-				if (!string.IsNullOrEmpty(player.Item1))
-					sb.Append($" | Slot 2: {player.Item1}");
-				if (!string.IsNullOrEmpty(player.Item2))
-					sb.Append($" | Slot 3: {player.Item2}");
-				if (!string.IsNullOrEmpty(player.Item3))
-					sb.Append($" | Slot 4: {player.Item3}");
-				if (!string.IsNullOrEmpty(player.Item4))
-					sb.Append($" | Slot 5: {player.Item4}");
-				if (!string.IsNullOrEmpty(player.Item5))
-					sb.Append($" | Slot 6: {player.Item5}");
-				sb.AppendLine();
+				//sb.AppendLine("Items:");
+				//if (!string.IsNullOrEmpty(player.Item0))
+				//	sb.Append($"Slot 1: {player.Item0}");
+				//if (!string.IsNullOrEmpty(player.Item1))
+				//	sb.Append($" | Slot 2: {player.Item1}");
+				//if (!string.IsNullOrEmpty(player.Item2))
+				//	sb.Append($" | Slot 3: {player.Item2}");
+				//if (!string.IsNullOrEmpty(player.Item3))
+				//	sb.Append($" | Slot 4: {player.Item3}");
+				//if (!string.IsNullOrEmpty(player.Item4))
+				//	sb.Append($" | Slot 5: {player.Item4}");
+				//if (!string.IsNullOrEmpty(player.Item5))
+				//	sb.Append($" | Slot 6: {player.Item5}");
+				//sb.AppendLine();
 
-				if (!string.IsNullOrEmpty(player.Backpack0))
-					sb.Append($"Backpack Slot 1: {player.Backpack0}");
-				if (!string.IsNullOrEmpty(player.Backpack1))
-					sb.Append($" | Backpack  Slot 2: {player.Backpack1}");
-				if (!string.IsNullOrEmpty(player.Backpack2))
-					sb.Append($" | Backpack Slot 3: {player.Backpack2}");
-				sb.AppendLine();
-				sb.Append("Ability Upgrade Path:");
-				sb.AppendLine();
+				//if (!string.IsNullOrEmpty(player.Backpack0))
+				//	sb.Append($"Backpack Slot 1: {player.Backpack0}");
+				//if (!string.IsNullOrEmpty(player.Backpack1))
+				//	sb.Append($" | Backpack  Slot 2: {player.Backpack1}");
+				//if (!string.IsNullOrEmpty(player.Backpack2))
+				//	sb.Append($" | Backpack Slot 3: {player.Backpack2}");
+				//sb.AppendLine();
+				//sb.Append("Ability Upgrade Path:");
+				//sb.AppendLine();
 
 				// ability output
 				// In some scenarios a user might play the game
@@ -128,14 +121,14 @@ namespace DotaApi.Helpers
 						ability.UpgradeTime = match.StartTime.AddSeconds(ability.Time);
 
 						// output to screen
-						sb.AppendLine($" {ability.Name} upgraded at {ability.Level} @ {ability.UpgradeTime}");
+						// sb.AppendLine($" {ability.Name} upgraded at {ability.Level} @ {ability.UpgradeTime}");
 					}
 				}
 				else
 				{
-					sb.AppendLine("No abilities data");
+					// sb.AppendLine("No abilities data");
 				}
-				Console.WriteLine(sb.ToString());
+				// Console.WriteLine(sb.ToString());
 			}
 			return match;
 		}
@@ -158,7 +151,8 @@ namespace DotaApi.Helpers
 		/// </summary>
 		private static List<Ability> ParseAbilityText()
 		{
-			string abilityFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data", ABILITY_FILE);
+			string abilityFile = Path.Combine(HttpContext.Current.Request.PhysicalApplicationPath, "App_Data", ABILITY_FILE);
+
 			var text = File.ReadAllLines(abilityFile);
 			bool itemfound = false;
 
