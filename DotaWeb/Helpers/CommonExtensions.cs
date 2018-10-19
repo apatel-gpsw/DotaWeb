@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using DotaApi.Model;
+using DotaWeb.Models;
 using Newtonsoft.Json;
 using static DotaApi.Helpers.Lookups;
 using static DotaApi.Model.Heroes;
@@ -211,6 +213,132 @@ namespace DotaApi.Helpers
 			}
 
 			return resultHeroes;
+		}
+
+		/// <summary>
+		/// Gets match details for a single match, this includes player builds and details. Requires "MatchClass".
+		/// </summary>
+		public static MatchDetailsModel GetMatchDetail(long matchid)
+		{
+			List<Item> items = GetGameItems(false);
+			List<Hero> heroes = GetHeroes(false);
+			List<Ability> abilities = ParseAbilityText();
+
+			string response = DownloadSteamAPIString(MATCHDETAILSURL, API + "&match_id=" + matchid);
+
+			var detail = JsonConvert.DeserializeObject<MatchDetailsRootObject>(response);
+			MatchDetailsModel match = detail.Result;
+
+			match.StartTime = StringManipulation.UnixTimeStampToDateTime(match.Start_Time);
+			TimeSpan time = TimeSpan.FromSeconds(match.Duration);
+			string gameDuration = time.ToString(@"hh\:mm\:ss");
+
+			if (LobbyType.TryGetValue(match.Lobby_Type, out string lobby))
+			{
+				match.Lobbytype = lobby;
+			}
+
+			Console.WriteLine($"Match ID: {match.Match_ID}");
+			Console.WriteLine($"Match SeqNum: {match.Match_Seq_Num}");
+			Console.WriteLine($"Human Players: {match.Human_Players}");
+			Console.WriteLine($"Duration: {gameDuration}");
+			Console.WriteLine($"Game Mode: {match.Game_Mode}");
+			Console.WriteLine($"Lobby Type: {match.Lobbytype}");
+
+			foreach (var player in match.Players)
+			{
+				StringBuilder sb = new StringBuilder();
+
+				sb.AppendLine($"\nAccount ID: {player.Account_ID}");
+				player.Name = ConvertIDtoName(player.Hero_ID, heroes);
+				player.Steamid64 = StringManipulation.SteamIDConverter(player.Account_ID);
+				player.Steamid32 = StringManipulation.SteamIDConverter64to32(player.Steamid64);
+
+				var steamaccount = SteamAccountModel.GetSteamAccount(player.Account_ID);
+				player.PlayerName = steamaccount.PersonaName;
+
+				sb.AppendLine($"Player Name: {player.PlayerName}");
+				sb.AppendLine($"Hero: {player.Name}");
+				sb.AppendLine($"\tHero Level: {player.Level}");
+				sb.AppendLine($"K/D/A: {player.Kills}/{player.Deaths}/{player.Assists}");
+				sb.AppendLine($"CS: {player.Last_Hits}/{player.Denies}");
+				sb.AppendLine($"\tGPM: {player.Gold_Per_Min}");
+				sb.AppendLine($"\tXPM: {player.Xp_Per_Min}");
+
+				// getting item names based on the id number
+				player.Item0 = player.Item_0 > 0 ? ConvertIDtoName(player.Item_0, items) : null;
+				player.Item1 = player.Item_1 > 0 ? ConvertIDtoName(player.Item_1, items) : null;
+				player.Item2 = player.Item_2 > 0 ? ConvertIDtoName(player.Item_2, items) : null;
+				player.Item3 = player.Item_3 > 0 ? ConvertIDtoName(player.Item_3, items) : null;
+				player.Item4 = player.Item_4 > 0 ? ConvertIDtoName(player.Item_4, items) : null;
+				player.Item5 = player.Item_5 > 0 ? ConvertIDtoName(player.Item_5, items) : null;
+
+				player.Backpack0 = player.Backpack_0 > 0 ? ConvertIDtoName(player.Backpack_0, items) : null;
+				player.Backpack1 = player.Backpack_1 > 0 ? ConvertIDtoName(player.Backpack_1, items) : null;
+				player.Backpack2 = player.Backpack_2 > 0 ? ConvertIDtoName(player.Backpack_2, items) : null;
+
+				sb.AppendLine("Items:");
+				if (!string.IsNullOrEmpty(player.Item0))
+					sb.Append($"Slot 1: {player.Item0}");
+				if (!string.IsNullOrEmpty(player.Item1))
+					sb.Append($" | Slot 2: {player.Item1}");
+				if (!string.IsNullOrEmpty(player.Item2))
+					sb.Append($" | Slot 3: {player.Item2}");
+				if (!string.IsNullOrEmpty(player.Item3))
+					sb.Append($" | Slot 4: {player.Item3}");
+				if (!string.IsNullOrEmpty(player.Item4))
+					sb.Append($" | Slot 5: {player.Item4}");
+				if (!string.IsNullOrEmpty(player.Item5))
+					sb.Append($" | Slot 6: {player.Item5}");
+				sb.AppendLine();
+
+				if (!string.IsNullOrEmpty(player.Backpack0))
+					sb.Append($"Backpack Slot 1: {player.Backpack0}");
+				if (!string.IsNullOrEmpty(player.Backpack1))
+					sb.Append($" | Backpack  Slot 2: {player.Backpack1}");
+				if (!string.IsNullOrEmpty(player.Backpack2))
+					sb.Append($" | Backpack Slot 3: {player.Backpack2}");
+				sb.AppendLine();
+				sb.Append("Ability Upgrade Path:");
+				sb.AppendLine();
+
+				// ability output
+				// In some scenarios a user might play the game
+				// but not upgrade any abilities or he/she
+				// might get kicked out before they get a chance.
+				// In this type of situation, we must check for null
+				// before continuing.
+				if (player.Ability_Upgrades != null)
+				{
+					foreach (var ability in player.Ability_Upgrades)
+					{
+						// clean up the object a bit and put
+						// id where it should be.
+						ability.ID = ability.Ability;
+
+						// map the id to a readable name.
+						ability.Name = ConvertIDtoName(Convert.ToInt32(ability.Ability), abilities);
+
+						// add the upgrade seconds to the original start
+						// time to get the upgrade time.
+						ability.UpgradeTime = match.StartTime.AddSeconds(ability.Time);
+
+						// output to screen
+						sb.AppendLine($" {ability.Name} upgraded at {ability.Level} @ {ability.UpgradeTime}");
+					}
+				}
+				else
+				{
+					sb.AppendLine("No abilities data");
+				}
+				Console.WriteLine(sb.ToString());
+			}
+			return match;
+		}
+
+		private class MatchDetailsRootObject
+		{
+			public MatchDetailsModel Result { get; set; }
 		}
 
 		//public static List<Item> ParseItemsText(string[] text)

@@ -90,7 +90,7 @@
 				GPM/XPM
 			</th>
 			<th>
-				Damage
+				Damage (Hero/Tower)
 			</th>
 			<th>
 				Heal
@@ -102,20 +102,52 @@
 				<tr>
 					<td>
 						<div class="label-item">
-							@Html.DisplayFor(modelItem => item.IncomingFieldName)
+							@Html.DisplayFor(modelItem => item.PlayerName)
 						</div>
 					</td>
 					<td>
-						<div class="dropdown-item">
-							@Html.DropDownListFor(modelItem => item.SystemFields, new SelectList(item.SystemFields), new { @id = "ddl" + item.IncomingFieldName })
+						<div class="label-item">
+							@Html.DisplayFor(modelItem => item.Name)
 						</div>
 					</td>
 					<td>
-						<div class="checkbox-item">
-							@Html.CheckBox("isCustom", false, new { @id = "isCustom" + item.IncomingFieldName })
+						<div class="label-item">
+							@Html.DisplayFor(modelItem => item.Kills)
 						</div>
-						<div class="textbox-item">
-							@Html.TextBox("customFieldText", "", new { @readonly = "readonly", @id = "customFieldText" + item.IncomingFieldName })
+					</td>
+					<td>
+						<div class="label-item">
+							@Html.DisplayFor(modelItem => item.Deaths)
+						</div>
+					</td>
+					<td>
+						<div class="label-item">
+							@Html.DisplayFor(modelItem => item.Assists)
+						</div>
+					</td>
+					<td>
+						<div class="label-item">
+							@Html.DisplayFor(modelItem => item.Gold * Model.Duration)
+						</div>
+					</td>
+					<td>
+						<div class="label-item">
+							@Html.DisplayFor(modelItem => item.Last_Hits + "/" + item.Denies)
+						</div>
+					</td>
+					<td>
+						<div class="label-item">
+							@Html.DisplayFor(modelItem => item.Gold_Per_Min + "/" + item.Xp_Per_Min)
+						</div>
+					</td>
+					<td>
+						<div class="label-item">
+							@Html.DisplayFor(modelItem => item.Hero_Damage + "/" + item.Tower_Damage)
+						</div>
+					</td>
+					<td>
+						<div class="label-item">
+							@Html.DisplayFor(modelItem => item.Hero_Healing)
 						</div>
 					</td>
 				</tr>

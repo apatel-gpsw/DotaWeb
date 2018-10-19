@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 
 namespace DotaApi.Helpers
@@ -43,6 +45,40 @@ namespace DotaApi.Helpers
 			hp1,
 			hp2
 		}
+
+		public static Dictionary<int, string> LobbyType = new Dictionary<int, string>()
+		{
+			{-1, "Invalid"},
+			{0, "Public Matchmaking"},
+			{1, "Practice"},
+			{2, "Tournament"},
+			{3, "Tutorial"},
+			{4, "Co-Op with Bots"},
+			{5, "Team Match"},
+			{6, "Solo Queue"},
+			{7, "Ranked Public Matchmaking"},
+			{8, "1v1 Practice Matchmaking"}
+		};
+
+		//public enum LobbyType
+		//{
+		//	Invalid = -1,
+		//	[Description("Public Matchmaking")]
+		//	PublicMatchmaking = 1,
+		//	Practice = 2,
+		//	Tournament = 3,
+		//	Tutorial = 4,
+		//	[Description("Co-Op with Bots")]
+		//	CoOpwithBots = 5,
+		//	[Description("Team Match")]
+		//	TeamMatch = 6,
+		//	[Description("Solo Queue")]
+		//	SoloQueue = 7,
+		//	[Description("Ranked Public Matchmaking")]
+		//	RankedPublicMatchmaking = 8,
+		//	[Description("1v1 Practice Matchmaking")]
+		//	OneVOnePracticeMatchmaking = 9
+		//}
 
 		public static string GetImageURL(Enum entity, string name, Enum size)
 		{
