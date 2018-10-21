@@ -17,7 +17,8 @@ namespace DotaWeb.Controllers
 			long x = long.Parse(matchID); //Convert.ToInt64()
 			var MatchDetailsModel = CommonExtensions.GetMatchDetail(x);
 			ViewBag.ShowList = true;
-			return View(MatchDetailsModel);
+			// ViewData["MatchDetailsModel"] = MatchDetailsModel;
+			return View("Index", MatchDetailsModel);
 		}
 
 		public ActionResult About()

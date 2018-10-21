@@ -52,7 +52,7 @@ namespace DotaApi.Helpers
 				player.Steamid32 = StringManipulation.SteamIDConverter64to32(player.Steamid64);
 
 				SteamAccountPlayerModel steamaccount = GetSteamAccount(player.Account_ID);
-				player.PlayerName = steamaccount.PersonaName;
+				player.PlayerName = string.IsNullOrEmpty(steamaccount.PersonaName) ? "Anonymous" : steamaccount.PersonaName;
 
 				//sb.AppendLine($"Player Name: {player.PlayerName}");
 				//sb.AppendLine($"Hero: {player.Name}");
