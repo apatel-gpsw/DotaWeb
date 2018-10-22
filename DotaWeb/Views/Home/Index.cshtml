@@ -6,12 +6,33 @@
 
 @using (Html.BeginForm("GetMatchData", "Home", FormMethod.Get))
 {
-
-	<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.intellisense.js"></script>
+	@*<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.intellisense.js"></script>*@
 	<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
 	<script>
+		function Toggle() {
+			var acc = $(".accordion");
+			var i;
+
+			for (i = 0; i < acc.length; i++) {
+				acc[i].addEventListener("click", function () {
+					this.classList.toggle("active");
+					var panel = this.nextElementSibling;
+					if (panel.style.display === "block") {
+						panel.style.display = "none";
+					} else {
+						panel.style.display = "block";
+					}
+				});
+			}
+		}
 		$(document).ready(function () {
-			$('#searchButton').click(function (event) {
+			Toggle();
+			$(".accordion").trigger("click");
+
+			if (document.referrer.indexOf(document.location.href) == 0)
+				$(".accordion").trigger("click");
+
+			$('#searchButton').click(function () {
 				var isValid = false;
 				var errorList = [];
 				errorList.push('Enter a valid Match ID or Player ID.');
@@ -26,6 +47,7 @@
 				else
 					isValid = true;
 
+				//alert('yes');
 				//if (isValid) {
 				//	$.ajax({
 				//		type: "POST",
@@ -46,7 +68,7 @@
 	</script>
 
 	<div class="jumbotron">
-		<h1>Search match/player</h1>
+		<h1 class="accordion">Search match/player</h1>
 		<div class="form-horizontal">
 			<div class="form-group">
 				@Html.Label("Match ID", "Match ID", new { @class = "col-md-2 control-label" })
@@ -74,13 +96,13 @@
 		@Html.DisplayFor(model => model.Game_Mode)
 		@Html.DisplayFor(model => model.Duration, "Duration")
 		<div>
-			<table id="fieldTable" border="1">
+			<table id="fieldTable" style="width: 100%" class="table">
 				<tr>
 					<th>
-						Player
+						Hero
 					</th>
 					<th>
-						Hero
+						Player
 					</th>
 					<th>
 						Kills
@@ -108,69 +130,79 @@
 					</th>
 				</tr>
 				@{
-					var x = ViewBag.MatchDetailsModel;
+					int i = 0;
+					string style;
 					foreach (var item in Model.Players)
 					{
+						i++;
+						if (i < 6)
+						{
+							style = "radiant";
+						}
+						else
+						{
+							style = "dire";
+						}
 						<tr>
 							<td>
-								@*@Html.DisplayNameFor(model => model.Game_Mode)*@
-								<div class="label-item">
-									@Html.DisplayFor(modelItem => item.PlayerName)
-								</div>
-							</td>
-							<td>
-								<div class="label-item">
+								<div class=@style>
 									@Html.DisplayFor(modelItem => item.Name)
 								</div>
 							</td>
 							<td>
-								<div class="label-item">
+								@*@Html.DisplayNameFor(model => model.Game_Mode)*@
+								<div class=@style>
+									@Html.DisplayFor(modelItem => item.PlayerName)
+								</div>
+							</td>
+							<td>
+								<div class=@style>
 									@Html.DisplayFor(modelItem => item.Kills)
 								</div>
 							</td>
 							<td>
-								<div class="label-item">
+								<div class=@style>
 									@Html.DisplayFor(modelItem => item.Deaths)
 								</div>
 							</td>
 							<td>
-								<div class="label-item">
+								<div class=@style>
 									@Html.DisplayFor(modelItem => item.Assists)
 								</div>
 							</td>
 							<td>
 								@{ var netWorth = (item.Gold * Model.Duration / 1000) + "K";
-									<div class="label-item">
+									<div class=@style>
 										@Html.DisplayFor(modelItem => netWorth)
 									</div>
 								}
 							</td>
 							<td>
 								@{
-									var lhdn = item.Last_Hits + "/" + item.Denies;
-									<div class="label-item">
+									var lhdn = item.Last_Hits + " / " + item.Denies;
+									<div class=@style>
 										@Html.DisplayFor(modelItem => lhdn)
 									</div>
 								}
 							</td>
 							<td>
 								@{
-									var gpxp = item.Gold_Per_Min + "/" + item.Xp_Per_Min;
-									<div class="label-item">
+									var gpxp = item.Gold_Per_Min + " / " + item.Xp_Per_Min;
+									<div class=@style>
 										@Html.DisplayFor(modelItem => gpxp)
 									</div>
 								}
 							</td>
 							<td>
 								@{
-									var damage = item.Hero_Damage + "/" + item.Tower_Damage;
-									<div class="label-item">
+									var damage = item.Hero_Damage + " / " + item.Tower_Damage;
+									<div class=@style>
 										@Html.DisplayFor(modelItem => damage)
 									</div>
 								}
 							</td>
 							<td>
-								<div class="label-item">
+								<div class=@style>
 									@Html.DisplayFor(modelItem => item.Hero_Healing)
 								</div>
 							</td>
@@ -182,600 +214,31 @@
 		</div>
 	}
 }
-LOL
+		LOL
 
-@*<table id="fieldTable1" class="table" width="500">
-		<tr>
-			<th>
-				Player
-			</th>
-			<th>
-				Hero
-			</th>
-			<th>
-				Kills
-			</th>
-			<th>
-				Deaths
-			</th>
-			<th>
-				Assists
-			</th>
-			<th>
-				Net Worth
-			</th>
-			<th>
-				LH/DN
-			</th>
-			<th>
-				GPM/XPM
-			</th>
-			<th>
-				Damage (Hero/Tower)
-			</th>
-			<th>
-				Heal
-			</th>
-		</tr>
-		<tr>
-			<td>
-				<div class="label-item">
-					godzilla4me
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					Bounty Hunter
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					4
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					4
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					20
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					6586682
-				</div>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+	.accordion {
+		background-color: #eee;
+		color: #444;
+		cursor: pointer;
+		padding: 18px;
+		width: 100%;
+		border: none;
+		text-align: left;
+		outline: none;
+		font-size: 15px;
+		transition: 0.4s;
+	}
 
-			</td>
-			<td>
-				<div class="label-item">
-					42/1
-				</div>
+		.active, .accordion:hover {
+			background-color: #ccc;
+		}
 
-			</td>
-			<td>
-				<div class="label-item">
-					362/431
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					14334/0
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					941
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="label-item">
-					Whimsy
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					Spirit Breaker
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					7
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					10
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					13
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					5089245
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					75/4
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					325/388
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					16591/253
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					0
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="label-item">
-					Fear he who fears nothing
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					Ember Spirit
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					4
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					3
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					15
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					1969372
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					245/6
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					442/520
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					22291/665
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					0
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="label-item">
-					Your Local Bigfoot
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					Ursa
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					12
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					5
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					3
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					734688
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					181/4
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					405/432
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					19029/0
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					0
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="label-item">
-
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					Bane
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					2
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					6
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					7
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					2015290
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					85/6
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					274/509
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					5760/116
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					0
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="label-item">
-					NoName
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					Juggernaut
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					10
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					3
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					13
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					6834129
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					170/4
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					444/503
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					23922/5642
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					6835
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="label-item">
-
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					Invoker
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					5
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					7
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					9
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					8647890
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					257/20
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					545/563
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					18870/4026
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					0
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="label-item">
-					Solid.Miracle
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					Jakiro
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					4
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					8
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					17
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					2397940
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					88/4
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					326/441
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					16568/2210
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					2570
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="label-item">
-					&#227;€Œ&#239;&#188;&#179;&#239;&#188;&#163;&#239;&#188;&#181;&#239;&#188;&#180;&#227;€
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					Axe
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					6
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					4
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					8
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					6915761
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					181/3
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					419/505
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					15752/1964
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					0
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="label-item">
-					Bashful Swarm Host
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					Vengeful Spirit
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					3
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					7
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					9
-				</div>
-			</td>
-			<td>
-				<div class="label-item">
-					6168318
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					69/8
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					306/342
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					12008/1599
-				</div>
-
-			</td>
-			<td>
-				<div class="label-item">
-					240
-				</div>
-			</td>
-		</tr>
-
-	</table>*@
+	.panel {
+		padding: 0 18px;
+		display: none;
+		background-color: white;
+		overflow: hidden;
+	}
+</style>

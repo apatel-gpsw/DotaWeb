@@ -220,12 +220,23 @@ optgroup {
 table {
 	border-spacing: 0;
 	border-collapse: collapse;
+	border: 1px solid #ddd !important;
 }
 
 td,
 th {
+	text-align: left;
 	padding: 0;
 }
+
+.radiant {
+	color: #A9CF54
+}
+
+.dire {
+	color: #C23C2A
+}
+
 /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 @media print {
 	*,
