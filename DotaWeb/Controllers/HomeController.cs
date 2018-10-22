@@ -24,7 +24,9 @@ namespace DotaWeb.Controllers
 		public ActionResult GetMatchData(string matchID, string playerID)
 		{
 			// 4169885095
-			long x = long.Parse(matchID); //Convert.ToInt64()
+			var a = HttpContext.Request.QueryString["Match ID"];
+
+			long x = long.Parse(a); //Convert.ToInt64()
 			var MatchDetailsModel = CommonExtensions.GetMatchDetail(x);
 			ViewBag.ShowList = true;
 			// ViewData["MatchDetailsModel"] = MatchDetailsModel;

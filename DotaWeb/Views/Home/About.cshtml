@@ -4,70 +4,70 @@
 }
 @*enctype = "multipart/form-data",*@
 
-@using (Html.BeginForm("GetMatchData1", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
-{
+@*@using (Html.BeginForm("GetMatchData1", "Home", FormMethod.Get, new { enctype = "multipart/form-data" }))
+	{*@
 
-	<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.intellisense.js"></script>
-	<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
-	<script>
-		$(document).ready(function () {
-			$('#searchButton').click(function (event) {
-				var isValid = false;
-				var errorList = [];
-				errorList.push('Enter a valid Match ID or Player ID.');
+<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.intellisense.js"></script>
+<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+	$(document).ready(function () {
+		$('#searchButton').click(function (event) {
+			var isValid = false;
+			var errorList = [];
+			errorList.push('Enter a valid Match ID or Player ID.');
 
-				var matchID = $('#matchID').val();
-				var playerID = $('#playerID').val();
+			var matchID = $('#matchID').val();
+			var playerID = $('#playerID').val();
 
-				if (!matchID && !playerID)
-					alert("Please enter and ID in at least one of the textboxes.");
-				else if (!$.isNumeric(matchID) && !$.isNumeric(playerID))
-					alert("Only numeric values are allowed.")
-				else
-					isValid = true;
+			if (!matchID && !playerID)
+				alert("Please enter and ID in at least one of the textboxes.");
+			else if (!$.isNumeric(matchID) && !$.isNumeric(playerID))
+				alert("Only numeric values are allowed.")
+			else
+				isValid = true;
 
-				//if (isValid) {
-				//	$.ajax({
-				//		type: "POST",
-				//		url: "/Home/GetMatchData",
-				//		contentType: 'application/json',
-				//		dataType: "json",
-				//		data: JSON.stringify({
-				//			'matchID': matchID, 'playerID': playerID
-				//		}),
-				//		success: function (returnValue) {
-				//			alert(returnValue);
-				//			alert('Success');
-				//		}
-				//	});
-				//}
-			});
+			//if (isValid) {
+			//	$.ajax({
+			//		type: "POST",
+			//		url: "/Home/GetMatchData",
+			//		contentType: 'application/json',
+			//		dataType: "json",
+			//		data: JSON.stringify({
+			//			'matchID': matchID, 'playerID': playerID
+			//		}),
+			//		success: function (returnValue) {
+			//			alert(returnValue);
+			//			alert('Success');
+			//		}
+			//	});
+			//}
 		});
-	</script>
+	});
+</script>
 
-	<div class="jumbotron">
-		<h1>Search match/player</h1>
-		<div class="form-horizontal">
-			<div class="form-group">
-				@Html.Label("Match ID", "Match ID", new { @class = "col-md-2 control-label" })
-				<div class="col-md-10">
-					@Html.TextBox("Match ID", null, new { @id = "matchID", @class = "form-control" }) 4169885095
-				</div>
+<div class="jumbotron">
+	<h1>Search match/player</h1>
+	<div class="form-horizontal">
+		<div class="form-group">
+			@Html.Label("Match ID", "Match ID", new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+				@Html.TextBox("Match ID", null, new { @id = "matchID", @class = "form-control" }) 4169885095
 			</div>
-			<div class="form-group">
-				@Html.Label("Player ID", "Player ID", new { @class = "col-md-2 control-label" })
-				<div class="col-md-10">
-					@Html.TextBox("Player ID", null, new { @id = "playerID", @class = "form-control" })
-				</div>
+		</div>
+		<div class="form-group">
+			@Html.Label("Player ID", "Player ID", new { @class = "col-md-2 control-label" })
+			<div class="col-md-10">
+				@Html.TextBox("Player ID", null, new { @id = "playerID", @class = "form-control" })
 			</div>
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-10">
-					<input type="submit" id="searchButton" value="Search &raquo;" class="btn btn-primary btn-lg">
-				</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" id="searchButton" value="Search &raquo;" class="btn btn-primary btn-lg">
 			</div>
 		</div>
 	</div>
-
+</div>
+@{
 	if (@ViewBag.ShowList)
 	{
 		@Html.DisplayFor(model => model.Game_Mode)
