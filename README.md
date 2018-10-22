@@ -88,11 +88,11 @@ https://dev.dota2.com/showthread.php?t=138016
         }
       }
    }
-4. Get match details using [GetMatchDetails()](https://wiki.teamfortress.com/wiki/WebAPI/GetMatchDetails). For now, the match id is hardcoded.
-5. Show data on the console.
+4. Get match details using [GetMatchDetails()](https://wiki.teamfortress.com/wiki/WebAPI/GetMatchDetails). For now, only the search by match id is available.
+5. Show the match data in a tabular format on the UI.
 <br>
 <details>
-<summary>Show the match data in a tabular format on the UI.</summary>
+<summary>Sample Table (Match ID: 4169885095)</summary>
 <p>
 
 ![table](https://user-images.githubusercontent.com/9336827/47323983-e3899480-d612-11e8-9020-31197901aec0.PNG)
