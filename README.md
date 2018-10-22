@@ -95,5 +95,4 @@ https://dev.dota2.com/showthread.php?t=138016
 <summary>Show the match data in a tabular format on the UI.</summary>
 <p>
 
-```
-[[https://github.com/apatel-gpsw/DotaWeb/blob/master/DotaWeb/App_Data/Table.PNG?raw=true]]
+![table](https://user-images.githubusercontent.com/9336827/47323983-e3899480-d612-11e8-9020-31197901aec0.PNG)
