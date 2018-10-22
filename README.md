@@ -96,4 +96,4 @@ https://dev.dota2.com/showthread.php?t=138016
 <p>
 
 ```
-![alt text](https://github.com/apatel-gpsw/DotaWeb/tree/master/DotaWeb/App_Data/Table.png)
+![alt text](https://github.com/apatel-gpsw/DotaWeb/blob/master/DotaWeb/App_Data/Table.PNG)
