@@ -6,31 +6,17 @@
 
 @using (Html.BeginForm("GetMatchData", "Home", FormMethod.Get))
 {
-	@*<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.intellisense.js"></script>*@
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
 	<script>
-		function Toggle() {
-			var acc = $(".accordion");
-			var i;
-
-			for (i = 0; i < acc.length; i++) {
-				acc[i].addEventListener("click", function () {
-					this.classList.toggle("active");
-					var panel = this.nextElementSibling;
-					if (panel.style.display === "block") {
-						panel.style.display = "none";
-					} else {
-						panel.style.display = "block";
-					}
-				});
-			}
-		}
 		$(document).ready(function () {
-			Toggle();
-			$(".accordion").trigger("click");
+			// Accordion is collapsed by default
+			$("h1").trigger("click");
 
-			if (document.referrer.indexOf(document.location.href) == 0)
-				$(".accordion").trigger("click");
+			// Collapse when postback
+			if (document.referrer.indexOf(document.location.href) == 0) {
+				$("h1").trigger("click");
+			}
 
 			$('#searchButton').click(function () {
 				var isValid = false;
@@ -46,45 +32,30 @@
 					alert("Only numeric values are allowed.")
 				else
 					isValid = true;
-
-				//alert('yes');
-				//if (isValid) {
-				//	$.ajax({
-				//		type: "POST",
-				//		url: "/Home/GetMatchData",
-				//		contentType: 'application/json',
-				//		dataType: "json",
-				//		data: JSON.stringify({
-				//			'matchID': matchID, 'playerID': playerID
-				//		}),
-				//		success: function (returnValue) {
-				//			alert(returnValue);
-				//			alert('Success');
-				//		}
-				//	});
-				//}
 			});
 		});
 	</script>
 
 	<div class="jumbotron">
-		<h1 class="accordion">Search match/player</h1>
-		<div class="form-horizontal">
-			<div class="form-group">
-				@Html.Label("Match ID", "Match ID", new { @class = "col-md-2 control-label" })
-				<div class="col-md-10">
-					@Html.TextBox("Match ID", null, new { @id = "matchID", @class = "form-control" }) 4169885095
+		<h1 role="button" data-toggle="collapse" data-target="#collapseHeader" aria-expanded="true" aria-controls="collapseHeader">Search match/player</h1>
+		<div class="collapse" id="collapseHeader">
+			<div class="form-horizontal">
+				<div class="form-group">
+					@Html.Label("Match ID", "Match ID", new { @class = "col-md-2 control-label" })
+					<div class="col-md-10">
+						@Html.TextBox("Match ID", null, new { @id = "matchID", @class = "form-control" }) 4169885095
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				@Html.Label("Player ID", "Player ID", new { @class = "col-md-2 control-label" })
-				<div class="col-md-10">
-					@Html.TextBox("Player ID", null, new { @id = "playerID", @class = "form-control" })
+				<div class="form-group">
+					@Html.Label("Player ID", "Player ID", new { @class = "col-md-2 control-label" })
+					<div class="col-md-10">
+						@Html.TextBox("Player ID", null, new { @id = "playerID", @class = "form-control" })
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-md-offset-2 col-md-10">
-					<input type="submit" id="searchButton" value="Search &raquo;" class="btn btn-primary btn-lg">
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-10">
+						<input type="submit" id="searchButton" value="Search &raquo;" class="btn btn-primary btn-lg">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -145,6 +116,7 @@
 						}
 						<tr>
 							<td>
+								<img src="@Url.Content(item.HeroImage)" alt="Image" />
 								<div class=@style>
 									@Html.DisplayFor(modelItem => item.Name)
 								</div>
@@ -214,31 +186,38 @@
 		</div>
 	}
 }
-		LOL
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-	.accordion {
-		background-color: #eee;
-		color: #444;
-		cursor: pointer;
-		padding: 18px;
-		width: 100%;
-		border: none;
-		text-align: left;
-		outline: none;
-		font-size: 15px;
-		transition: 0.4s;
-	}
+@*alert('yes');
+	if (isValid) {
+		$.ajax({
+			type: "POST",
+			url: "/Home/GetMatchData",
+			contentType: 'application/json',
+			dataType: "json",
+			data: JSON.stringify({
+				'matchID': matchID, 'playerID': playerID
+			}),
+			success: function (returnValue) {
+				alert(returnValue);
+				alert('Success');
+			}
+		});
+	}*@
 
-		.active, .accordion:hover {
-			background-color: #ccc;
+
+@*function Toggle() {
+		var acc = $(".accordion");
+		var i;
+
+		for (i = 0; i < acc.length; i++) {
+			acc[i].addEventListener("click", function () {
+				this.classList.toggle("active");
+				var panel = this.nextElementSibling;
+				if (panel.style.display === "block") {
+					panel.style.display = "none";
+				} else {
+					panel.style.display = "block";
+				}
+			});
 		}
-
-	.panel {
-		padding: 0 18px;
-		display: none;
-		background-color: white;
-		overflow: hidden;
-	}
-</style>
+	}*@

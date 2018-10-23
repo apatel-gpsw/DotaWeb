@@ -12,6 +12,7 @@ namespace DotaWeb.Models
 		public string ProfileUrl { get; set; }
 		public int PlayerSlot { get; set; }
 		public int Hero_ID { get; set; }
+		public string HeroImage { get; set; }
 		public int Item_0 { get; set; }
 		public string Item0 { get; set; }
 		public int Item_1 { get; set; }

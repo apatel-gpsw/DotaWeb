@@ -48,6 +48,7 @@ namespace DotaApi.Helpers
 
 				//sb.AppendLine($"\nAccount ID: {player.Account_ID}");
 				player.Name = ConvertIDtoName(player.Hero_ID, heroes);
+				player.HeroImage = GetImageURL(Entity.heroes, player.Name.ToLower().Replace(" ", "_"), ImageSize.sb);
 				player.Steamid64 = StringManipulation.SteamIDConverter(player.Account_ID);
 				player.Steamid32 = StringManipulation.SteamIDConverter64to32(player.Steamid64);
 

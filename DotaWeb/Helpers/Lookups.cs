@@ -82,6 +82,32 @@ namespace DotaApi.Helpers
 
 		public static string GetImageURL(Enum entity, string name, Enum size)
 		{
+			switch (name)
+			{
+				case "vengeful_spirit":
+					name = "vengefulspirit";
+					break;
+				case "zeus":
+					name = "zuus";
+					break;
+				case "necrophos":
+					name = "necrolyte";
+					break;
+				case "queen_of_pain":
+					name = "queenofpain";
+					break;
+				case "wraith King":
+					name = "skeleton_king";
+					break;
+				case "clockwerk":
+					name = "rattletrap";
+					break;
+				case "lifestealer":
+					name = "life_stealer";
+					break;
+				default:
+					break;
+			}
 			return string.Concat(IMAGEURL, entity.ToString(), "/", name, "_", size.ToString(), ".png");
 		}
 	}
