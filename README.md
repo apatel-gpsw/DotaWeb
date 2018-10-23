@@ -95,4 +95,5 @@ https://dev.dota2.com/showthread.php?t=138016
 <summary>Sample Table (Match ID: 4169885095)</summary>
 <p>
 
-![table](https://user-images.githubusercontent.com/9336827/47323983-e3899480-d612-11e8-9020-31197901aec0.PNG)
+![table](https://user-images.githubusercontent.com/9336827/47392772-5f96e180-d6d2-11e8-9350-d6ea213c98af.PNG)
+
