@@ -17,6 +17,10 @@ namespace DotaApi.Helpers
 {
 	public static class CommonExtensions
 	{
+		public static Dictionary<int, Item> Items = GetGameItems();
+		public static Dictionary<int, Hero> Heroes = GetHeroes();
+		public static Dictionary<int, Ability> Abilities = ParseAbilityText();
+
 		#region MatchDetails
 
 		/// <summary>
@@ -24,10 +28,6 @@ namespace DotaApi.Helpers
 		/// </summary>
 		public static MatchDetailsModel GetMatchDetail(long matchid)
 		{
-			List<Item> items = GetGameItems(false);
-			List<Hero> heroes = GetHeroes(false);
-			List<Ability> abilities = ParseAbilityText();
-
 			string response = DownloadSteamAPIString(MATCHDETAILSURL, API + "&match_id=" + matchid);
 
 			var detail = JsonConvert.DeserializeObject<MatchDetailsRootObject>(response);
@@ -44,68 +44,39 @@ namespace DotaApi.Helpers
 
 			foreach (var player in match.Players)
 			{
-				//StringBuilder sb = new StringBuilder();
-
-				//sb.AppendLine($"\nAccount ID: {player.Account_ID}");
-				player.Name = ConvertIDtoName(player.Hero_ID, heroes);
-				player.HeroImage = GetImageURL(Entity.heroes, player.Name.ToLower().Replace(" ", "_"), ImageSize.sb);
+				player.Name = ConvertIDtoName(player.Hero_ID, Heroes);
+				player.HeroImage = ConvertIDtoImageUrl(player.Hero_ID, Heroes);
 				player.Steamid64 = StringManipulation.SteamIDConverter(player.Account_ID);
 				player.Steamid32 = StringManipulation.SteamIDConverter64to32(player.Steamid64);
 
 				SteamAccountPlayerModel steamaccount = GetSteamAccount(player.Account_ID);
 				player.PlayerName = string.IsNullOrEmpty(steamaccount.PersonaName) ? "Anonymous" : steamaccount.PersonaName;
 
-				//sb.AppendLine($"Player Name: {player.PlayerName}");
-				//sb.AppendLine($"Hero: {player.Name}");
-				//sb.AppendLine($"\tHero Level: {player.Level}");
-				//sb.AppendLine($"K/D/A: {player.Kills}/{player.Deaths}/{player.Assists}");
-				//sb.AppendLine($"CS: {player.Last_Hits}/{player.Denies}");
-				//sb.AppendLine($"\tGPM: {player.Gold_Per_Min}");
-				//sb.AppendLine($"\tXPM: {player.Xp_Per_Min}");
+				player.Tower_Damage = player.Tower_Damage == 0 ? 0 : player.Tower_Damage;
 
 				// getting item names based on the id number
-				player.Item0 = player.Item_0 > 0 ? ConvertIDtoName(player.Item_0, items) : null;
-				player.Item1 = player.Item_1 > 0 ? ConvertIDtoName(player.Item_1, items) : null;
-				player.Item2 = player.Item_2 > 0 ? ConvertIDtoName(player.Item_2, items) : null;
-				player.Item3 = player.Item_3 > 0 ? ConvertIDtoName(player.Item_3, items) : null;
-				player.Item4 = player.Item_4 > 0 ? ConvertIDtoName(player.Item_4, items) : null;
-				player.Item5 = player.Item_5 > 0 ? ConvertIDtoName(player.Item_5, items) : null;
+				player.Item0 = player.Item_0 > 0 ? ConvertIDtoName(player.Item_0, Items) : null;
+				player.Item0Image = player.Item_0 > 0 ? ConvertIDtoImageUrl(player.Item_0, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
 
-				player.Backpack0 = player.Backpack_0 > 0 ? ConvertIDtoName(player.Backpack_0, items) : null;
-				player.Backpack1 = player.Backpack_1 > 0 ? ConvertIDtoName(player.Backpack_1, items) : null;
-				player.Backpack2 = player.Backpack_2 > 0 ? ConvertIDtoName(player.Backpack_2, items) : null;
+				player.Item1 = player.Item_1 > 0 ? ConvertIDtoName(player.Item_1, Items) : null;
+				player.Item1Image = player.Item_1 > 0 ? ConvertIDtoImageUrl(player.Item_1, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
 
-				//sb.AppendLine("Items:");
-				//if (!string.IsNullOrEmpty(player.Item0))
-				//	sb.Append($"Slot 1: {player.Item0}");
-				//if (!string.IsNullOrEmpty(player.Item1))
-				//	sb.Append($" | Slot 2: {player.Item1}");
-				//if (!string.IsNullOrEmpty(player.Item2))
-				//	sb.Append($" | Slot 3: {player.Item2}");
-				//if (!string.IsNullOrEmpty(player.Item3))
-				//	sb.Append($" | Slot 4: {player.Item3}");
-				//if (!string.IsNullOrEmpty(player.Item4))
-				//	sb.Append($" | Slot 5: {player.Item4}");
-				//if (!string.IsNullOrEmpty(player.Item5))
-				//	sb.Append($" | Slot 6: {player.Item5}");
-				//sb.AppendLine();
+				player.Item2 = player.Item_2 > 0 ? ConvertIDtoName(player.Item_2, Items) : null;
+				player.Item2Image = player.Item_2 > 0 ? ConvertIDtoImageUrl(player.Item_2, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
 
-				//if (!string.IsNullOrEmpty(player.Backpack0))
-				//	sb.Append($"Backpack Slot 1: {player.Backpack0}");
-				//if (!string.IsNullOrEmpty(player.Backpack1))
-				//	sb.Append($" | Backpack  Slot 2: {player.Backpack1}");
-				//if (!string.IsNullOrEmpty(player.Backpack2))
-				//	sb.Append($" | Backpack Slot 3: {player.Backpack2}");
-				//sb.AppendLine();
-				//sb.Append("Ability Upgrade Path:");
-				//sb.AppendLine();
+				player.Item3 = player.Item_3 > 0 ? ConvertIDtoName(player.Item_3, Items) : null;
+				player.Item3Image = player.Item_3 > 0 ? ConvertIDtoImageUrl(player.Item_3, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
 
-				// ability output
-				// In some scenarios a user might play the game
-				// but not upgrade any abilities or he/she
-				// might get kicked out before they get a chance.
-				// In this type of situation, we must check for null
-				// before continuing.
+				player.Item4 = player.Item_4 > 0 ? ConvertIDtoName(player.Item_4, Items) : null;
+				player.Item4Image = player.Item_4 > 0 ? ConvertIDtoImageUrl(player.Item_4, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
+
+				player.Item5 = player.Item_5 > 0 ? ConvertIDtoName(player.Item_5, Items) : null;
+				player.Item5Image = player.Item_5 > 0 ? ConvertIDtoImageUrl(player.Item_5, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
+
+				player.Backpack0 = player.Backpack_0 > 0 ? ConvertIDtoName(player.Backpack_0, Items) : null;
+				player.Backpack1 = player.Backpack_1 > 0 ? ConvertIDtoName(player.Backpack_1, Items) : null;
+				player.Backpack2 = player.Backpack_2 > 0 ? ConvertIDtoName(player.Backpack_2, Items) : null;
+
 				if (player.Ability_Upgrades != null)
 				{
 					foreach (var ability in player.Ability_Upgrades)
@@ -115,42 +86,45 @@ namespace DotaApi.Helpers
 						ability.ID = ability.Ability;
 
 						// map the id to a readable name.
-						ability.Name = ConvertIDtoName(Convert.ToInt32(ability.Ability), abilities);
+						ability.Name = ConvertIDtoName(Convert.ToInt32(ability.Ability), Abilities);
 
 						// add the upgrade seconds to the original start
 						// time to get the upgrade time.
 						ability.UpgradeTime = match.StartTime.AddSeconds(ability.Time);
-
-						// output to screen
-						// sb.AppendLine($" {ability.Name} upgraded at {ability.Level} @ {ability.UpgradeTime}");
 					}
 				}
 				else
 				{
 					// sb.AppendLine("No abilities data");
 				}
-				// Console.WriteLine(sb.ToString());
 			}
 			return match;
 		}
 
 		/// <summary>
 		/// Generic Method using <see cref="ISearchableDictionary"/> properties.
-		/// Converts incoming List into a dictionary and then returns Name corresponding to the ID.
-		/// Used for Items, Abilities and Heros.
+		/// Returns Name corresponding to the ID.
 		/// </summary>
-		private static string ConvertIDtoName<T>(int id, List<T> list) where T : ISearchableDictionary
+		private static string ConvertIDtoName<T>(int id, Dictionary<int, T> itemDict) where T : ISearchableDictionary
 		{
-			var itemDict = list.ToDictionary(x => x.ID, x => x.Name);
-			string name = itemDict.Where(x => x.Key == id).FirstOrDefault().Value;
+			T itemObject = itemDict.Where(x => x.Key == id).FirstOrDefault().Value;
+			return itemObject != null ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(itemObject.Name) : "";
+		}
 
-			return name != null ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(name) : "";
+		/// <summary>
+		/// Generic Method using <see cref="ISearchableDictionary"/> properties.
+		/// Returns URL corresponding to the ID.
+		/// </summary>
+		private static string ConvertIDtoImageUrl<T>(int id, Dictionary<int, T> itemDict) where T : ISearchableDictionary
+		{
+			T itemObject = itemDict.Where(x => x.Key == id).FirstOrDefault().Value;
+			return itemObject != null ? itemObject.ImageURL : "";
 		}
 
 		/// <summary>
 		/// Reads the npc_abilities.txt and builds the abilities class.
 		/// </summary>
-		private static List<Ability> ParseAbilityText()
+		private static Dictionary<int, Ability> ParseAbilityText()
 		{
 			string abilityFile = Path.Combine(HttpContext.Current.Request.PhysicalApplicationPath, "App_Data", ABILITY_FILE);
 
@@ -158,7 +132,7 @@ namespace DotaApi.Helpers
 			bool itemfound = false;
 
 			// List to hold our parsed items.
-			List<Ability> abilities = new List<Ability>();
+			Dictionary<int, Ability> resultDic = new Dictionary<int, Ability>();
 
 			// Item object will be populating
 			Ability ability = new Ability();
@@ -176,13 +150,13 @@ namespace DotaApi.Helpers
 				{
 					ability = new Ability();
 					itemfound = true;
-					ability.ID = System.Convert.ToInt32(trimmed_clean.Replace("ID", "").Split('/')[0].Trim());
+					ability.ID = Convert.ToInt32(trimmed_clean.Replace("ID", "").Split('/')[0].Trim());
 
 					// We get the hero name
 					ability.HeroName = text[count - 4].Split('_')[0].Replace("\"", "").Replace("\t", "").Trim();
 
 					rawAbilityName = text[count - 4].Replace(ability.HeroName, "").Replace("\"", "").Replace("\t", "").Trim();
-					ability.AbilityImage = GetImageURL(Entity.abilities, ability.HeroName + rawAbilityName, ImageSize.md);
+					ability.ImageURL = GetImageURL(Entity.abilities, ability.HeroName + rawAbilityName, ImageSize.md);
 
 					// Let's remove hero name from original
 					ability.Name = rawAbilityName.Replace("_", " ");
@@ -212,37 +186,30 @@ namespace DotaApi.Helpers
 					if (trimmed_clean.StartsWith("//="))
 					{
 						// Add to our list of items/
-						abilities.Add(ability);
+						resultDic.Add(ability.ID, ability);
 						itemfound = false;
 					}
 				}
 				count++;
 			}
-			return abilities;
+			return resultDic;
 		}
 
 		/// <summary>
 		/// Gets the latest list of items from Steam.
 		/// </summary>
-		private static List<Item> GetGameItems(bool verbose)
+		private static Dictionary<int, Item> GetGameItems()
 		{
 			string response = DownloadSteamAPIString(ITEMSURL, API);
 			ItemsObject itemsObject = JsonConvert.DeserializeObject<ItemsObject>(response);
-			List<Item> resultItems = new List<Item>();
 
-			//if verbose flag is set to true, then show console
-			//message.
-			if (verbose == true)
-				Console.WriteLine("Count of Heroes {0}", itemsObject.Result.Items.Count);
+			Dictionary<int, Item> resultDic = new Dictionary<int, Item>();
 
 			int itemCountInt = 0;
 			Item Item;
 			string rawItemName = "";
 			foreach (var item in itemsObject.Result.Items)
 			{
-				if (verbose == true)
-					Console.Write("{0} of {1}. Item localized-name: {2}|", itemCountInt, itemsObject.Result.Items.Count, item.Localized_Name);
-
 				rawItemName = item.Name.Replace("item_", "");
 				// $"http://cdn.dota2.com/apps/dota2/images/items/{rawItemName}_lg.png";
 				string itemImage = GetImageURL(Entity.items, rawItemName, ImageSize.lg);
@@ -251,31 +218,24 @@ namespace DotaApi.Helpers
 				{
 					Name = item.Localized_Name,
 					ID = item.ID,
-					ItemImage = itemImage
+					ImageURL = itemImage
 				};
-				if (verbose == true)
-					Console.WriteLine(" cleaned: {0}", Item.Name);
 
-				resultItems.Add(Item);
+				resultDic.Add(item.ID, Item);
 				itemCountInt++;
 			}
 
-			return resultItems;
+			return resultDic;
 		}
 
 		/// <summary>
 		/// Gets the latest list of heroes from Steam, requires "HerosClass".
 		/// </summary>
-		private static List<Hero> GetHeroes(bool verbose)
+		private static Dictionary<int, Hero> GetHeroes()
 		{
 			string response = DownloadSteamAPIString(HEROSURL, API);
 			HeroesObject heroesObject = JsonConvert.DeserializeObject<HeroesObject>(response);
-			List<Hero> resultHeroes = new List<Hero>();
-
-			//if verbose flag is set to true, then show console
-			//message.
-			if (verbose == true)
-				Console.WriteLine("Count of Heroes {0}", heroesObject.Result.Heroes.Count);
+			Dictionary<int, Hero> resultDic = new Dictionary<int, Hero>();
 
 			int herocountInt = 1;
 
@@ -285,36 +245,30 @@ namespace DotaApi.Helpers
 				ID = 0,
 				Name = "Npc_dota_hero_Private Profile"
 			};
-			if (verbose == true)
-				Console.WriteLine("Hero orig-name: {0}", Hero.Name);
 
-			resultHeroes.Add(Hero);
+			resultDic.Add(Hero.ID, Hero);
 			string rawHeroName = "";
 
 			foreach (var hero in heroesObject.Result.Heroes)
 			{
-				if (verbose == true)
-					Console.Write("{0} of {1}. Hero orig-name: {2}|", herocountInt, heroesObject.Result.Heroes.Count, hero.Name);
 
 				rawHeroName = hero.Name.Replace("npc_dota_hero_", "");
 				// http://cdn.dota2.com/apps/dota2/images/heroes/{rawHeroName}_lg.png
-				string heroImage = GetImageURL(Entity.heroes, rawHeroName, ImageSize.lg);
+				string heroImage = GetImageURL(Entity.heroes, rawHeroName, ImageSize.sb);
 
 				Hero = new Hero
 				{
 					Name = hero.Localized_Name,
 					ID = hero.ID,
 					OrigName = hero.Name,
-					HeroImage = heroImage
+					ImageURL = heroImage
 				};
-				if (verbose == true)
-					Console.WriteLine(" cleaned: {0}", Hero.Name);
 
-				resultHeroes.Add(Hero);
+				resultDic.Add(Hero.ID, Hero);
 				herocountInt++;
 			}
 
-			return resultHeroes;
+			return resultDic;
 		}
 
 		private class MatchDetailsRootObject

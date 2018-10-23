@@ -15,16 +15,22 @@ namespace DotaWeb.Models
 		public string HeroImage { get; set; }
 		public int Item_0 { get; set; }
 		public string Item0 { get; set; }
+		public string Item0Image { get; set; }
 		public int Item_1 { get; set; }
 		public string Item1 { get; set; }
+		public string Item1Image { get; set; }
 		public int Item_2 { get; set; }
 		public string Item2 { get; set; }
+		public string Item2Image { get; set; }
 		public int Item_3 { get; set; }
 		public string Item3 { get; set; }
+		public string Item3Image { get; set; }
 		public int Item_4 { get; set; }
 		public string Item4 { get; set; }
+		public string Item4Image { get; set; }
 		public int Item_5 { get; set; }
 		public string Item5 { get; set; }
+		public string Item5Image { get; set; }
 		public int Kills { get; set; }
 		public int Deaths { get; set; }
 		public int Assists { get; set; }

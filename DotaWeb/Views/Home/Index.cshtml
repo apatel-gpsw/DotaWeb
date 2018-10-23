@@ -76,16 +76,16 @@
 						Player
 					</th>
 					<th>
-						Kills
+						K
 					</th>
 					<th>
-						Deaths
+						D
 					</th>
 					<th>
-						Assists
+						A
 					</th>
 					<th>
-						Net Worth
+						NET
 					</th>
 					<th>
 						LH/DN
@@ -94,10 +94,16 @@
 						GPM/XPM
 					</th>
 					<th>
-						Damage (Hero/Tower)
+						DMG
 					</th>
 					<th>
-						Heal
+						HEAL
+					</th>
+					<th>
+						BLD
+					</th>
+					<th>
+						ITEMS
 					</th>
 				</tr>
 				@{
@@ -115,14 +121,10 @@
 							style = "dire";
 						}
 						<tr>
-							<td>
-								<img src="@Url.Content(item.HeroImage)" alt="Image" />
-								<div class=@style>
-									@Html.DisplayFor(modelItem => item.Name)
-								</div>
+							<td style="text-align:center">
+								<img src="@Url.Content(item.HeroImage)" alt="HeroImage" title="@Html.DisplayFor(modelItem => item.Name)" />
 							</td>
 							<td>
-								@*@Html.DisplayNameFor(model => model.Game_Mode)*@
 								<div class=@style>
 									@Html.DisplayFor(modelItem => item.PlayerName)
 								</div>
@@ -167,9 +169,8 @@
 							</td>
 							<td>
 								@{
-									var damage = item.Hero_Damage + " / " + item.Tower_Damage;
 									<div class=@style>
-										@Html.DisplayFor(modelItem => damage)
+										@Html.DisplayFor(modelItem => item.Hero_Damage)
 									</div>
 								}
 							</td>
@@ -177,6 +178,25 @@
 								<div class=@style>
 									@Html.DisplayFor(modelItem => item.Hero_Healing)
 								</div>
+							</td>
+							<td>
+								@{
+									<div class=@style>
+										@Html.DisplayFor(modelItem => item.Tower_Damage)
+									</div>
+								}
+							</td>
+							<td>
+								@{
+									<div class=@style>
+										<img src="@Url.Content(item.Item0Image)" alt="Item0 Image" title="@Html.DisplayFor(modelItem => item.Item0)" />
+										<img src="@Url.Content(item.Item1Image)" alt="Item1 Image" title="@Html.DisplayFor(modelItem => item.Item1)" />
+										<img src="@Url.Content(item.Item2Image)" alt="Item2 Image" title="@Html.DisplayFor(modelItem => item.Item2)" />
+										<img src="@Url.Content(item.Item3Image)" alt="Item3 Image" title="@Html.DisplayFor(modelItem => item.Item3)" />
+										<img src="@Url.Content(item.Item4Image)" alt="Item4 Image" title="@Html.DisplayFor(modelItem => item.Item4)" />
+										<img src="@Url.Content(item.Item5Image)" alt="Item5 Image" title="@Html.DisplayFor(modelItem => item.Item5)" />
+									</div>
+								}
 							</td>
 						</tr>
 					}

@@ -4,5 +4,6 @@
 	{
 		int ID { get; }
 		string Name { get; }
+		string ImageURL { get; }
 	}
 }

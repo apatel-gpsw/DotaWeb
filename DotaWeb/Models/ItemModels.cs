@@ -8,7 +8,7 @@ namespace DotaApi.Model
 		public int ID { get; set; }
 		public string Cost { get; set; }
 		public string Side_Shop { get; set; }
-		public string ItemImage { get; set; }
+		public string ImageURL { get; set; }
 		public string Localized_Name { get; set; }
 		//public string CastRange { get; set; }
 		//public string CastPoint { get; set; }

@@ -37,6 +37,6 @@
 		public string ItemDisassemblable { get; set; }
 		public string ItemShareability { get; set; }
 		public string ItemDeclaresPurchase { get; set; }
-		public string AbilityImage { get; set; }
+		public string ImageURL { get; set; }
 	}
 }
