@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Web;
 using DotaApi.Model;
 using DotaWeb.Models;
@@ -56,22 +55,22 @@ namespace DotaApi.Helpers
 
 				// getting item names based on the id number
 				player.Item0 = player.Item_0 > 0 ? ConvertIDtoName(player.Item_0, Items) : null;
-				player.Item0Image = player.Item_0 > 0 ? ConvertIDtoImageUrl(player.Item_0, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
+				player.Item0Image = player.Item_0 > 0 ? ConvertIDtoImageUrl(player.Item_0, Items) : BLANKIMG;
 
 				player.Item1 = player.Item_1 > 0 ? ConvertIDtoName(player.Item_1, Items) : null;
-				player.Item1Image = player.Item_1 > 0 ? ConvertIDtoImageUrl(player.Item_1, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
+				player.Item1Image = player.Item_1 > 0 ? ConvertIDtoImageUrl(player.Item_1, Items) : BLANKIMG;
 
 				player.Item2 = player.Item_2 > 0 ? ConvertIDtoName(player.Item_2, Items) : null;
-				player.Item2Image = player.Item_2 > 0 ? ConvertIDtoImageUrl(player.Item_2, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
+				player.Item2Image = player.Item_2 > 0 ? ConvertIDtoImageUrl(player.Item_2, Items) : BLANKIMG;
 
 				player.Item3 = player.Item_3 > 0 ? ConvertIDtoName(player.Item_3, Items) : null;
-				player.Item3Image = player.Item_3 > 0 ? ConvertIDtoImageUrl(player.Item_3, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
+				player.Item3Image = player.Item_3 > 0 ? ConvertIDtoImageUrl(player.Item_3, Items) : BLANKIMG;
 
 				player.Item4 = player.Item_4 > 0 ? ConvertIDtoName(player.Item_4, Items) : null;
-				player.Item4Image = player.Item_4 > 0 ? ConvertIDtoImageUrl(player.Item_4, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
+				player.Item4Image = player.Item_4 > 0 ? ConvertIDtoImageUrl(player.Item_4, Items) : BLANKIMG;
 
 				player.Item5 = player.Item_5 > 0 ? ConvertIDtoName(player.Item_5, Items) : null;
-				player.Item5Image = player.Item_5 > 0 ? ConvertIDtoImageUrl(player.Item_5, Items) : "https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
+				player.Item5Image = player.Item_5 > 0 ? ConvertIDtoImageUrl(player.Item_5, Items) : BLANKIMG;
 
 				player.Backpack0 = player.Backpack_0 > 0 ? ConvertIDtoName(player.Backpack_0, Items) : null;
 				player.Backpack1 = player.Backpack_1 > 0 ? ConvertIDtoName(player.Backpack_1, Items) : null;

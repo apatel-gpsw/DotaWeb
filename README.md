@@ -1,5 +1,10 @@
 # DotaWeb
 
+Sample Table (Match ID: 4169885095)
+<p>
+
+![table](https://user-images.githubusercontent.com/9336827/47392772-5f96e180-d6d2-11e8-9350-d6ea213c98af.PNG)
+
 C# MVC web application to show match details using the Steam APIs.
 
 `First things first, register yourself on https://steamcommunity.com/dev/apikey and replace the API Key you receive in the App.config`
@@ -90,10 +95,4 @@ https://dev.dota2.com/showthread.php?t=138016
    }
 4. Get match details using [GetMatchDetails()](https://wiki.teamfortress.com/wiki/WebAPI/GetMatchDetails). For now, only the search by match id is available.
 5. Show the match data in a tabular format on the UI.
-<br>
-<details>
-<summary>Sample Table (Match ID: 4169885095)</summary>
-<p>
-
-![table](https://user-images.githubusercontent.com/9336827/47392772-5f96e180-d6d2-11e8-9350-d6ea213c98af.PNG)
 

@@ -22,6 +22,7 @@ namespace DotaApi.Helpers
 		public static string STEAMACCOUNTURL = @"http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=";
 		public static string MATCHHISTORYBYSEQURL = @"https://api.steampowered.com/IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/?key=";
 		public static string IMAGEURL = @"http://cdn.dota2.com/apps/dota2/images/";
+		public static string BLANKIMG = @"https://upload.wikimedia.org/wikipedia/commons/4/48/BLANK_ICON.png";
 
 		public enum Entity
 		{
@@ -33,14 +34,19 @@ namespace DotaApi.Helpers
 		public enum ImageSize
 		{
 			// For all 3 Entities
-			lg,     // Large horizontal portrait
+			[Description("Large Portrait")]
+			lg,
 
 			// For Hero Portraits
-			sb,     // Small horizontal portrait
-			full,   // Full quality horizontal portrait
-			vert,    // Full quality vertical portrait
+			[Description("Small Portrait")]
+			sb,
+			[Description("Full Quality Horizontal Portrait")]
+			full,
+			[Description("Full Quality Vertical Portrait")]
+			vert,
 
 			// For Abilities
+			[Description("Medium Portrait")]
 			md,
 			hp1,
 			hp2
