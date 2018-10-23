@@ -169,8 +169,9 @@
 							</td>
 							<td>
 								@{
+									var damage = item.Hero_Damage / 1000 + "K";
 									<div class=@style>
-										@Html.DisplayFor(modelItem => item.Hero_Damage)
+										@Html.DisplayFor(modelItem => damage)
 									</div>
 								}
 							</td>
@@ -188,13 +189,18 @@
 							</td>
 							<td>
 								@{
-									<div class=@style>
-										<img src="@Url.Content(item.Item0Image)" alt="Item0 Image" title="@Html.DisplayFor(modelItem => item.Item0)" />
+									<div class=@style style="display:inline;float:left">
+										<img class="img-circle" src="@Url.Content(item.Item0Image)" alt="Item0 Image" title="@Html.DisplayFor(modelItem => item.Item0)" />
 										<img src="@Url.Content(item.Item1Image)" alt="Item1 Image" title="@Html.DisplayFor(modelItem => item.Item1)" />
 										<img src="@Url.Content(item.Item2Image)" alt="Item2 Image" title="@Html.DisplayFor(modelItem => item.Item2)" />
 										<img src="@Url.Content(item.Item3Image)" alt="Item3 Image" title="@Html.DisplayFor(modelItem => item.Item3)" />
 										<img src="@Url.Content(item.Item4Image)" alt="Item4 Image" title="@Html.DisplayFor(modelItem => item.Item4)" />
 										<img src="@Url.Content(item.Item5Image)" alt="Item5 Image" title="@Html.DisplayFor(modelItem => item.Item5)" />
+										<div style="background-color:dimgrey;display:inline;float:right">
+											<img src="@Url.Content(item.Backpack0Image)" alt="Backpack0 Image" title="@Html.DisplayFor(modelItem => item.Backpack0)" />
+											<img src="@Url.Content(item.Backpack1Image)" alt="Backpack1 Image" title="@Html.DisplayFor(modelItem => item.Backpack1)" />
+											<img src="@Url.Content(item.Backpack2Image)" alt="Backpack2 Image" title="@Html.DisplayFor(modelItem => item.Backpack2)" />
+										</div>
 									</div>
 								}
 							</td>

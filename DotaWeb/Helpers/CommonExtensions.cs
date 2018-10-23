@@ -73,8 +73,13 @@ namespace DotaApi.Helpers
 				player.Item5Image = player.Item_5 > 0 ? ConvertIDtoImageUrl(player.Item_5, Items) : BLANKIMG;
 
 				player.Backpack0 = player.Backpack_0 > 0 ? ConvertIDtoName(player.Backpack_0, Items) : null;
+				player.Backpack0Image = player.Backpack_0 > 0 ? ConvertIDtoImageUrl(player.Backpack_0, Items) : BLANKIMG;
+
 				player.Backpack1 = player.Backpack_1 > 0 ? ConvertIDtoName(player.Backpack_1, Items) : null;
+				player.Backpack1Image = player.Backpack_1 > 0 ? ConvertIDtoImageUrl(player.Backpack_1, Items) : BLANKIMG;
+
 				player.Backpack2 = player.Backpack_2 > 0 ? ConvertIDtoName(player.Backpack_2, Items) : null;
+				player.Backpack2Image = player.Backpack_2 > 0 ? ConvertIDtoImageUrl(player.Backpack_2, Items) : BLANKIMG;
 
 				if (player.Ability_Upgrades != null)
 				{

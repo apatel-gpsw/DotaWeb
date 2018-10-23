@@ -47,10 +47,13 @@ namespace DotaWeb.Models
 		public int Level { get; set; }
 		public int Backpack_0 { get; set; }
 		public string Backpack0 { get; set; }
+		public string Backpack0Image { get; set; }
 		public int Backpack_1 { get; set; }
 		public string Backpack1 { get; set; }
+		public string Backpack1Image { get; set; }
 		public int Backpack_2 { get; set; }
 		public string Backpack2 { get; set; }
+		public string Backpack2Image { get; set; }
 		public List<AbilityUpgrade> Ability_Upgrades { get; set; }
 	}
 }
