@@ -43,7 +43,7 @@ https://dev.dota2.com/showthread.php?t=138016
          ]
       }
    }
-2. Build Heros List object using [GetHeroes()](https://wiki.teamfortress.com/wiki/WebAPI/GetHeroes). 
+2. Build Heroes List object using [GetHeroes()](https://wiki.teamfortress.com/wiki/WebAPI/GetHeroes). 
    > API: https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=api_key&language=en <br>
    > Hero Image URL example: http://cdn.dota2.com/apps/dota2/images/heroes/antimage_lg.png <br>
    <details>
