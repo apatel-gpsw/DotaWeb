@@ -7,9 +7,9 @@ Sample Table (Match ID: 4169885095)
 
 C# MVC web application to show match details using the Steam APIs.
 
-`First things first, register yourself on https://steamcommunity.com/dev/apikey and replace the API Key you receive in the App.config`
+`First things first, register yourself on https://steamcommunity.com/dev/apikey and replace the "APIKey" you receive in the web.config`
 
-**Better Steam API documentation** (Dota Game ID: 570)
+**Steam API documentation used** (Dota Game ID: 570)
 https://steamwebapi.azurewebsites.net/
 
 **Subset of useful APIs**
