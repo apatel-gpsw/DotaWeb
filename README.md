@@ -3,7 +3,7 @@
 Sample Table (Match ID: 4169885095)
 <p>
 
-![table](https://user-images.githubusercontent.com/9336827/47392772-5f96e180-d6d2-11e8-9350-d6ea213c98af.PNG)
+![table](https://user-images.githubusercontent.com/9336827/47464231-73f3e080-d79d-11e8-86c3-f7856d20d74d.PNG)
 
 C# MVC web application to show match details using the Steam APIs.
 

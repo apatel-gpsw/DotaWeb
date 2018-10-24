@@ -65,9 +65,9 @@
 	if (@ViewBag.ShowList)
 	{
 		@Html.DisplayFor(model => model.Game_Mode)
-		@Html.DisplayFor(model => model.Duration, "Duration")
+		@Html.DisplayFor(model => model.DurationStr, "Duration")
 		<div>
-			<table id="fieldTable" style="width: 100%" class="table">
+			<table id="radiantTable" style="width: 100%" class="table">
 				<tr>
 					<th>
 						Hero
@@ -105,6 +105,9 @@
 					<th>
 						ITEMS
 					</th>
+					<th>
+						BACKPACK
+					</th>
 				</tr>
 				@{
 					int i = 0;
@@ -115,98 +118,249 @@
 						if (i < 6)
 						{
 							style = "radiant";
+							<tr>
+								<td style="text-align:center">
+									<img class="img-semi-circle" src="@Url.Content(item.HeroImage)" alt="HeroImage" title="@Html.DisplayFor(modelItem => item.Name)" />
+								</td>
+								<td>
+									<div class=@style>
+										@Html.DisplayFor(modelItem => item.PlayerName)
+									</div>
+								</td>
+								<td>
+									<div class=@style>
+										@Html.DisplayFor(modelItem => item.Kills)
+									</div>
+								</td>
+								<td>
+									<div class=@style>
+										@Html.DisplayFor(modelItem => item.Deaths)
+									</div>
+								</td>
+								<td>
+									<div class=@style>
+										@Html.DisplayFor(modelItem => item.Assists)
+									</div>
+								</td>
+								<td>
+									@{ var netWorth = (item.Gold * Model.Duration / 1000) + "K";
+										<div class=@style>
+											@Html.DisplayFor(modelItem => netWorth)
+										</div>
+									}
+								</td>
+								<td>
+									@{
+										var lhdn = item.Last_Hits + " / " + item.Denies;
+										<div class=@style>
+											@Html.DisplayFor(modelItem => lhdn)
+										</div>
+									}
+								</td>
+								<td>
+									@{
+										var gpxp = item.Gold_Per_Min + " / " + item.Xp_Per_Min;
+										<div class=@style>
+											@Html.DisplayFor(modelItem => gpxp)
+										</div>
+									}
+								</td>
+								<td>
+									@{
+										var damage = item.Hero_Damage / 1000 + "K";
+										<div class=@style>
+											@Html.DisplayFor(modelItem => damage)
+										</div>
+									}
+								</td>
+								<td>
+									<div class=@style>
+										@Html.DisplayFor(modelItem => item.Hero_Healing)
+									</div>
+								</td>
+								<td>
+									@{
+										<div class=@style>
+											@Html.DisplayFor(modelItem => item.Tower_Damage)
+										</div>
+									}
+								</td>
+								<td>
+									@{
+										<div class=@style style="display: inline; float: left">
+											<img class="img-semi-circle" src="@Url.Content(item.Item0Image)" alt="Item0 Image" title="@Html.DisplayFor(modelItem => item.Item0)" />
+											<img class="img-semi-circle" src="@Url.Content(item.Item1Image)" alt="Item1 Image" title="@Html.DisplayFor(modelItem => item.Item1)" />
+											<img class="img-semi-circle" src="@Url.Content(item.Item2Image)" alt="Item2 Image" title="@Html.DisplayFor(modelItem => item.Item2)" />
+											<img class="img-semi-circle" src="@Url.Content(item.Item3Image)" alt="Item3 Image" title="@Html.DisplayFor(modelItem => item.Item3)" />
+											<img class="img-semi-circle" src="@Url.Content(item.Item4Image)" alt="Item4 Image" title="@Html.DisplayFor(modelItem => item.Item4)" />
+											<img class="img-semi-circle" src="@Url.Content(item.Item5Image)" alt="Item5 Image" title="@Html.DisplayFor(modelItem => item.Item5)" />
+										</div>
+									}
+								</td>
+								<td>
+									@{
+										<div class=@style style="display: inline; float: left">
+											<div>
+												<img class="img-semi-circle" src="@Url.Content(item.Backpack0Image)" alt="Backpack0 Image" title="@Html.DisplayFor(modelItem => item.Backpack0)" />
+												<img class="img-semi-circle" src="@Url.Content(item.Backpack1Image)" alt="Backpack1 Image" title="@Html.DisplayFor(modelItem => item.Backpack1)" />
+												<img class="img-semi-circle" src="@Url.Content(item.Backpack2Image)" alt="Backpack2 Image" title="@Html.DisplayFor(modelItem => item.Backpack2)" />
+											</div>
+										</div>
+									}
+								</td>
+							</tr>
 						}
-						else
+					}
+				}
+			</table>
+		</div>
+		@*<div style="text-align: center">
+				@Html.DisplayFor(model => model.First_Blood_TimeStr)
+			</div>*@
+		<div>
+			<table id="radiantTable" style="width: 100%" class="table">
+				<tr>
+					<th>
+						Hero
+					</th>
+					<th>
+						Player
+					</th>
+					<th>
+						K
+					</th>
+					<th>
+						D
+					</th>
+					<th>
+						A
+					</th>
+					<th>
+						NET
+					</th>
+					<th>
+						LH/DN
+					</th>
+					<th>
+						GPM/XPM
+					</th>
+					<th>
+						DMG
+					</th>
+					<th>
+						HEAL
+					</th>
+					<th>
+						BLD
+					</th>
+					<th>
+						ITEMS
+					</th>
+					<th>
+						BACKPACK
+					</th>
+				</tr>
+				@{
+					i = 0;
+					foreach (var item in Model.Players)
+					{
+						i++;
+						if (i > 5)
 						{
 							style = "dire";
-						}
-						<tr>
-							<td style="text-align:center">
-								<img src="@Url.Content(item.HeroImage)" alt="HeroImage" title="@Html.DisplayFor(modelItem => item.Name)" />
-							</td>
-							<td>
-								<div class=@style>
-									@Html.DisplayFor(modelItem => item.PlayerName)
-								</div>
-							</td>
-							<td>
-								<div class=@style>
-									@Html.DisplayFor(modelItem => item.Kills)
-								</div>
-							</td>
-							<td>
-								<div class=@style>
-									@Html.DisplayFor(modelItem => item.Deaths)
-								</div>
-							</td>
-							<td>
-								<div class=@style>
-									@Html.DisplayFor(modelItem => item.Assists)
-								</div>
-							</td>
-							<td>
-								@{ var netWorth = (item.Gold * Model.Duration / 1000) + "K";
+							<tr>
+								<td style="text-align:center">
+									<img class="img-semi-circle" src="@Url.Content(item.HeroImage)" alt="HeroImage" title="@Html.DisplayFor(modelItem => item.Name)" />
+								</td>
+								<td>
 									<div class=@style>
-										@Html.DisplayFor(modelItem => netWorth)
+										@Html.DisplayFor(modelItem => item.PlayerName)
 									</div>
-								}
-							</td>
-							<td>
-								@{
-									var lhdn = item.Last_Hits + " / " + item.Denies;
+								</td>
+								<td>
 									<div class=@style>
-										@Html.DisplayFor(modelItem => lhdn)
+										@Html.DisplayFor(modelItem => item.Kills)
 									</div>
-								}
-							</td>
-							<td>
-								@{
-									var gpxp = item.Gold_Per_Min + " / " + item.Xp_Per_Min;
+								</td>
+								<td>
 									<div class=@style>
-										@Html.DisplayFor(modelItem => gpxp)
+										@Html.DisplayFor(modelItem => item.Deaths)
 									</div>
-								}
-							</td>
-							<td>
-								@{
-									var damage = item.Hero_Damage / 1000 + "K";
+								</td>
+								<td>
 									<div class=@style>
-										@Html.DisplayFor(modelItem => damage)
+										@Html.DisplayFor(modelItem => item.Assists)
 									</div>
-								}
-							</td>
-							<td>
-								<div class=@style>
-									@Html.DisplayFor(modelItem => item.Hero_Healing)
-								</div>
-							</td>
-							<td>
-								@{
-									<div class=@style>
-										@Html.DisplayFor(modelItem => item.Tower_Damage)
-									</div>
-								}
-							</td>
-							<td>
-								@{
-									<div class=@style style="display:inline;float:left">
-										<img class="img-circle" src="@Url.Content(item.Item0Image)" alt="Item0 Image" title="@Html.DisplayFor(modelItem => item.Item0)" />
-										<img src="@Url.Content(item.Item1Image)" alt="Item1 Image" title="@Html.DisplayFor(modelItem => item.Item1)" />
-										<img src="@Url.Content(item.Item2Image)" alt="Item2 Image" title="@Html.DisplayFor(modelItem => item.Item2)" />
-										<img src="@Url.Content(item.Item3Image)" alt="Item3 Image" title="@Html.DisplayFor(modelItem => item.Item3)" />
-										<img src="@Url.Content(item.Item4Image)" alt="Item4 Image" title="@Html.DisplayFor(modelItem => item.Item4)" />
-										<img src="@Url.Content(item.Item5Image)" alt="Item5 Image" title="@Html.DisplayFor(modelItem => item.Item5)" />
-										<div style="background-color:dimgrey;display:inline;float:right">
-											<img src="@Url.Content(item.Backpack0Image)" alt="Backpack0 Image" title="@Html.DisplayFor(modelItem => item.Backpack0)" />
-											<img src="@Url.Content(item.Backpack1Image)" alt="Backpack1 Image" title="@Html.DisplayFor(modelItem => item.Backpack1)" />
-											<img src="@Url.Content(item.Backpack2Image)" alt="Backpack2 Image" title="@Html.DisplayFor(modelItem => item.Backpack2)" />
+								</td>
+								<td>
+									@{ var netWorth = (item.Gold * Model.Duration / 1000) + "K";
+										<div class=@style>
+											@Html.DisplayFor(modelItem => netWorth)
 										</div>
+									}
+								</td>
+								<td>
+									@{
+										var lhdn = item.Last_Hits + " / " + item.Denies;
+										<div class=@style>
+											@Html.DisplayFor(modelItem => lhdn)
+										</div>
+									}
+								</td>
+								<td>
+									@{
+										var gpxp = item.Gold_Per_Min + " / " + item.Xp_Per_Min;
+										<div class=@style>
+											@Html.DisplayFor(modelItem => gpxp)
+										</div>
+									}
+								</td>
+								<td>
+									@{
+										var damage = item.Hero_Damage / 1000 + "K";
+										<div class=@style>
+											@Html.DisplayFor(modelItem => damage)
+										</div>
+									}
+								</td>
+								<td>
+									<div class=@style>
+										@Html.DisplayFor(modelItem => item.Hero_Healing)
 									</div>
-								}
-							</td>
-						</tr>
+								</td>
+								<td>
+									@{
+										<div class=@style>
+											@Html.DisplayFor(modelItem => item.Tower_Damage)
+										</div>
+									}
+								</td>
+								<td>
+									@{
+										<div class=@style style="display: inline; float: left">
+											<img class="img-semi-circle" src="@Url.Content(item.Item0Image)" alt="Item0 Image" title="@Html.DisplayFor(modelItem => item.Item0)" />
+											<img class="img-semi-circle" src="@Url.Content(item.Item1Image)" alt="Item1 Image" title="@Html.DisplayFor(modelItem => item.Item1)" />
+											<img class="img-semi-circle" src="@Url.Content(item.Item2Image)" alt="Item2 Image" title="@Html.DisplayFor(modelItem => item.Item2)" />
+											<img class="img-semi-circle" src="@Url.Content(item.Item3Image)" alt="Item3 Image" title="@Html.DisplayFor(modelItem => item.Item3)" />
+											<img class="img-semi-circle" src="@Url.Content(item.Item4Image)" alt="Item4 Image" title="@Html.DisplayFor(modelItem => item.Item4)" />
+											<img class="img-semi-circle" src="@Url.Content(item.Item5Image)" alt="Item5 Image" title="@Html.DisplayFor(modelItem => item.Item5)" />
+										</div>
+									}
+								</td>
+								<td>
+									@{
+										<div class=@style style="display: inline; float: left">
+											<div>
+												<img class="img-semi-circle" src="@Url.Content(item.Backpack0Image)" alt="Backpack0 Image" title="@Html.DisplayFor(modelItem => item.Backpack0)" />
+												<img class="img-semi-circle" src="@Url.Content(item.Backpack1Image)" alt="Backpack1 Image" title="@Html.DisplayFor(modelItem => item.Backpack1)" />
+												<img class="img-semi-circle" src="@Url.Content(item.Backpack2Image)" alt="Backpack2 Image" title="@Html.DisplayFor(modelItem => item.Backpack2)" />
+											</div>
+										</div>
+									}
+								</td>
+							</tr>
+						}
 					}
-
 				}
 			</table>
 		</div>

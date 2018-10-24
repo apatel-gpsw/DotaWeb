@@ -41,6 +41,9 @@ namespace DotaApi.Helpers
 				match.Lobbytype = lobby;
 			}
 
+			match.DurationStr = StringManipulation.UnixTimeStampToDateTime(match.Duration).ToLongTimeString();
+			match.First_Blood_TimeStr = StringManipulation.UnixTimeStampToDateTime(match.First_Blood_Time).ToLongTimeString();
+
 			foreach (var player in match.Players)
 			{
 				player.Name = ConvertIDtoName(player.Hero_ID, Heroes);
@@ -102,6 +105,7 @@ namespace DotaApi.Helpers
 					// sb.AppendLine("No abilities data");
 				}
 			}
+
 			return match;
 		}
 

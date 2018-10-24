@@ -1532,6 +1532,10 @@ img {
 	border-radius: 50%;
 }
 
+.img-semi-circle {
+	border-radius: 6px;
+}
+
 hr {
 	margin-top: 20px;
 	margin-bottom: 20px;
