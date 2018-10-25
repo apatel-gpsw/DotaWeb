@@ -32,17 +32,36 @@ namespace DotaApi.Helpers
 			var detail = JsonConvert.DeserializeObject<MatchDetailsRootObject>(response);
 			MatchDetailsModel match = detail.Result;
 
-			match.StartTime = StringManipulation.UnixTimeStampToDateTime(match.Start_Time);
-			TimeSpan time = TimeSpan.FromSeconds(match.Duration);
-			string gameDuration = time.ToString(@"hh\:mm\:ss");
+			#region MetaData
 
 			if (LobbyType.TryGetValue(match.Lobby_Type, out string lobby))
-			{
 				match.Lobbytype = lobby;
-			}
 
-			match.DurationStr = StringManipulation.UnixTimeStampToDateTime(match.Duration).ToLongTimeString();
-			match.First_Blood_TimeStr = StringManipulation.UnixTimeStampToDateTime(match.First_Blood_Time).ToLongTimeString();
+			if (GameModes.TryGetValue(match.Game_Mode, out string mode))
+				match.Game_ModeStr = mode;
+
+			match.StartTime = StringManipulation.UnixTimeStampToDateTime(match.Start_Time);
+			string playedTimeAgo = "";
+
+			if ((DateTime.Now - match.StartTime).TotalDays < 1)
+				playedTimeAgo = Math.Ceiling((DateTime.Now - match.StartTime).TotalHours).ToString() + " hours ago";
+			else
+				playedTimeAgo = Math.Ceiling((DateTime.Now - match.StartTime).TotalDays).ToString() + " days ago";
+
+			match.PlayedTimeAgo = playedTimeAgo;
+
+			TimeSpan timeToConvert = TimeSpan.FromSeconds(match.Duration);
+			match.DurationStr = timeToConvert.ToString(@"mm\:ss");
+
+			timeToConvert = TimeSpan.FromSeconds(match.First_Blood_Time);
+			match.First_Blood_TimeStr = timeToConvert.ToString(@"mm\:ss");
+
+			timeToConvert = TimeSpan.FromSeconds(match.Start_Time);
+			match.Start_TimeStr = timeToConvert.ToString(@"dd\:hh\:mm\:ss");
+
+			#endregion
+
+			#region PlayerInfo
 
 			foreach (var player in match.Players)
 			{
@@ -105,6 +124,8 @@ namespace DotaApi.Helpers
 					// sb.AppendLine("No abilities data");
 				}
 			}
+
+			#endregion
 
 			return match;
 		}

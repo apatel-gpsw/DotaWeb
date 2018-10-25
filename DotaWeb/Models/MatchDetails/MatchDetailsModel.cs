@@ -11,6 +11,8 @@ namespace DotaWeb.Models
 		public string DurationStr { get; set; }
 		public int Start_Time { get; set; }
 		public DateTime StartTime { get; set; }
+		public string Start_TimeStr { get; set; }
+		public string PlayedTimeAgo { get; set; }
 		public long Match_ID { get; set; }
 		public long Match_Seq_Num { get; set; }
 		public int Tower_Status_Radiant { get; set; }
@@ -27,5 +29,6 @@ namespace DotaWeb.Models
 		public int Positive_Votes { get; set; }
 		public int Negative_Votes { get; set; }
 		public int Game_Mode { get; set; }
+		public string Game_ModeStr { get; set; }
 	}
 }

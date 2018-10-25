@@ -64,8 +64,25 @@
 	@*@{*@
 	if (@ViewBag.ShowList)
 	{
-		@Html.DisplayFor(model => model.Game_Mode)
-		@Html.DisplayFor(model => model.DurationStr, "Duration")
+		<div style="text-align: center">
+			@Html.LabelFor(model => model.Lobbytype, "Lobby Type: ")
+			@Html.DisplayFor(model => model.Lobbytype)
+			<br />
+			@Html.LabelFor(model => model.Game_Mode, "Game Mode: ")
+			@Html.DisplayFor(model => model.Game_ModeStr)
+			<br />
+			@Html.LabelFor(model => model.StartTime, "Game Start Time: ")
+			@Html.DisplayFor(model => model.Start_TimeStr)
+			<br />
+			@Html.LabelFor(model => model.PlayedTimeAgo, "Played: ")
+			@Html.DisplayFor(model => model.PlayedTimeAgo)
+			<br />
+			@Html.LabelFor(model => model.Duration, "Game Duration: ")
+			@Html.DisplayFor(model => model.DurationStr)
+			<br />
+			@Html.LabelFor(model => model.First_Blood_TimeStr, "First Blood Time: ")
+			@Html.DisplayFor(model => model.First_Blood_TimeStr)
+		</div>
 		<div>
 			<table id="radiantTable" style="width: 100%" class="table">
 				<tr>
@@ -214,9 +231,6 @@
 				}
 			</table>
 		</div>
-		@*<div style="text-align: center">
-				@Html.DisplayFor(model => model.First_Blood_TimeStr)
-			</div>*@
 		<div>
 			<table id="radiantTable" style="width: 100%" class="table">
 				<tr>
