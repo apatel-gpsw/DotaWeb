@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using DotaApi.Helpers;
 using DotaWeb.Models;
 
 namespace DotaWeb.Controllers
@@ -32,14 +30,10 @@ namespace DotaWeb.Controllers
 		}
 
 		// GET: api/Products/5
-		public IHttpActionResult Get(int id)
+		public IHttpActionResult Get(long id)
 		{
-			var product = products.Where(x => x.ProductId == id).ToList();
-			if (product == null)
-			{
-				return NotFound();
-			}
-			return Ok(product);
+			var MatchDetailsModel = CommonExtensions.GetMatchDetail(id);
+			return Ok(MatchDetailsModel);
 		}
 
 
