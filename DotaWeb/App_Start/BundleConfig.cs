@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Optimization;
+using System.Web.Optimization.React;
 
 namespace DotaWeb
 {
@@ -25,6 +26,9 @@ namespace DotaWeb
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",
 					  "~/Content/site.css"));
+
+			bundles.Add(new BabelBundle("~/bundles/main").Include(
+					 "~/Scripts/React/ProductList.jsx"));
 		}
 	}
 }
