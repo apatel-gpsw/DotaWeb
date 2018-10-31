@@ -57,7 +57,7 @@ namespace DotaApi.Helpers
 			match.First_Blood_TimeStr = timeToConvert.ToString(@"mm\:ss");
 
 			timeToConvert = TimeSpan.FromSeconds(match.Start_Time);
-			match.Start_TimeStr = timeToConvert.ToString(@"dd\:hh\:mm\:ss");
+			match.Start_TimeStr = match.StartTime.ToString(@"dd MMM yyyy HH\:mm\:ss");
 
 			#endregion
 
