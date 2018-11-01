@@ -2,24 +2,85 @@
 	constructor() {
 		super();
 		this.state = {
-			MatchData: []
+			MatchData: [],
+			searchTerm: '',
+			search: false
 		}
+		this.handleSearchTermSubmit = this.handleSearchTermSubmit.bind(this);
+		this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
 	}
+  
+	handleSearchTermChange(searchTerm) {
+	  this.setState({searchTerm, search: false});
+	  console.log(this.state.searchTerm);
+	}
+	
+	handleSearchTermSubmit() {
+	  this.setState({search: true});
+	}	
+	
+	handleClick(e) {
+		e.preventDefault();
+		console.log('The link was clicked.');
+
+		var isValid = false;
+		var errorList = [];
+		errorList.push('Enter a valid Match ID or Player ID.');
+
+		var matchID = this.state.searchTerm;
+		alert(matchID);
+		var playerID = $('#playerID').val();
+
+		if (!matchID && !playerID)
+			alert("Please enter and ID in at least one of the textboxes.");
+		else if (!$.isNumeric(matchID) && !$.isNumeric(playerID))
+			alert("Only numeric values are allowed.")
+		else
+			isValid = true;
+
+		if(isValid) {
+			axios.get("http://localhost:59206/api/products/4169885095").then(response => {
+				this.setState({
+					MatchData: response.data
+				});
+			});
+		}
+	  }
 
 	componentDidMount() {
-		axios.get("http://localhost:59206/api/products/4169885095").then(response => {
-			//console.log(response.data.Players.map((p, index) => {
-			//	return <tr key={index}><td>{p.Name}</td><td>{p.PlayerName}</td><td>{p.Kill}</td><td>{p.Deaths}</td></tr>;
-			//}));
-			this.setState({
-				MatchData: response.data
-			});
-		});
+		
 	}
 
 	BuildTable(rows) {
 		return (
 			<section>
+				<a href="#" onClick={this.handleClick}>
+			Click me
+		  </a>
+				<div className="jumbotron">
+					<h1 role="button" data-toggle="collapse" data-target="#collapseHeader" aria-expanded="true" aria-controls="collapseHeader">Search match/player</h1>
+					<div className="collapse" id="collapseHeader">
+						<div className="form-horizontal">
+							<div className="form-group">
+								<label className="col-md-2 control-label" for="Match_ID">Match ID</label>
+								<div className="col-md-10">
+									<input className="form-control" id="matchID" name="Match ID" type="text" onChange={this.handleSearchTermChange} />
+								</div>
+							</div>
+							<div className="form-group">
+								<label className="col-md-2 control-label" for="Player_ID">Player ID</label>
+								<div className="col-md-10">
+									<input className="form-control" id="playerID" name="Player ID" type="text" />
+								</div>
+							</div>
+							<div className="form-group">
+								<div className="col-md-offset-2 col-md-10">
+									<input type="submit" id="searchButton" value="Search &raquo;" onClick={this.handleClick} className="btn btn-primary btn-lg" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<h1>Players Info</h1>
 				<div>
 					<table className="table">
@@ -92,12 +153,12 @@
 				<td>{player.Hero_Healing}</td>
 				<td>{player.Tower_Damage}</td>
 				<td>
-				<img className="img-semi-circle" src={player.Item0Image} alt="Item0 Image" />
-				<img className="img-semi-circle" src={player.Item1Image} alt="Item1 Image" />
-				<img className="img-semi-circle" src={player.Item2Image} alt="Item2 Image" />
-				<img className="img-semi-circle" src={player.Item3Image} alt="Item3 Image" />
-				<img className="img-semi-circle" src={player.Item4Image} alt="Item4 Image" />
-				<img className="img-semi-circle" src={player.Item5Image} alt="Item5 Image" />
+					<img className="img-semi-circle" src={player.Item0Image} alt="Item0 Image" />
+					<img className="img-semi-circle" src={player.Item1Image} alt="Item1 Image" />
+					<img className="img-semi-circle" src={player.Item2Image} alt="Item2 Image" />
+					<img className="img-semi-circle" src={player.Item3Image} alt="Item3 Image" />
+					<img className="img-semi-circle" src={player.Item4Image} alt="Item4 Image" />
+					<img className="img-semi-circle" src={player.Item5Image} alt="Item5 Image" />
 				</td>
 				<td>
 					<img className="img-semi-circle" src={player.Backpack0Image} alt="Backpack0 Image" />
