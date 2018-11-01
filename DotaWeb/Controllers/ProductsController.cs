@@ -34,6 +34,14 @@ namespace DotaWeb.Controllers
 		{
 			var MatchDetailsModel = CommonExtensions.GetMatchDetail(id);
 			return Ok(MatchDetailsModel);
+
+			//var product = products.Where(x => x.ProductId == id).ToList();
+			//if (product == null)
+			//{
+			//	return NotFound();
+			//}
+			//return Ok(product);
+
 		}
 
 
