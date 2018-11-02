@@ -10,27 +10,24 @@ class ProductsList extends React.Component {
 		}
 		this.handleSearchTermSubmit = this.handleSearchTermSubmit.bind(this);
 		this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
+		this.populateGrid = this.populateGrid.bind(this);
 	}
 
 	handleSearchTermChange(searchTerm) {
 		this.setState({ searchTerm, search: false });
-		console.log(this.state.searchTerm);
 	}
 
 	handleSearchTermSubmit() {
 		this.setState({ search: true });
 	}
 
-	handleClick(e) {
-		e.preventDefault();
-		console.log('The link was clicked.');
-
+	populateGrid(searchTerm) {
+		// e.preventDefault();
 		var isValid = false;
 		var errorList = [];
 		errorList.push('Enter a valid Match ID or Player ID.');
 
-		var matchID = this.state.searchTerm;
-		alert(matchID);
+		var matchID = searchTerm;// this.state.searchTerm;
 		var playerID = $('#playerID').val();
 
 		if (!matchID && !playerID)
@@ -41,7 +38,7 @@ class ProductsList extends React.Component {
 			isValid = true;
 
 		if (isValid) {
-			axios.get("http://localhost:59206/api/products/4169885095").then(response => {
+			axios.get("http://localhost:59206/api/products/" + searchTerm).then(response => {
 				this.setState({
 					MatchData: response.data
 				});
@@ -50,14 +47,17 @@ class ProductsList extends React.Component {
 	}
 
 	BuildTable(rows) {
+		let showTable = this.state.MatchData.length == 0 ? { display: 'none' } : { }
+		
 		return (
 			<section>
 				<SearchBar
 					searchTerm={this.state.searchTerm}
 					onSearchTermChange={this.handleSearchTermChange}
-					onSearchTermSubmit={this.handleSearchTermSubmit} />
-				<h1>Players Info</h1>
-				<div>
+					onSearchTermSubmit={this.handleSearchTermSubmit}
+					populateGrid={this.populateGrid} />
+				<div style={showTable}>
+					<h1>Players Info</h1>
 					<table className="table">
 						<thead>
 							<tr>

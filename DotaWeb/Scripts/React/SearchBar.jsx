@@ -1,30 +1,39 @@
 ﻿class SearchBar extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			MatchData: [],
+			searchTerm: '',
+			search: false
+		}
 		this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
 		this.handleSearchTermSubmit = this.handleSearchTermSubmit.bind(this);
+		this.populateGrid = this.populateGrid.bind(this);
+	}
+
+	populateGrid(searchTerm) {
+		this.props.populateGrid(searchTerm);
 	}
 
 	handleSearchTermChange(event) {
+		this.setState({ searchTerm: event.target.value });
 		this.props.onSearchTermChange(event.target.value);
 	}
 
 	handleSearchTermSubmit(event) {
 		event.preventDefault();
-		alert('asd');
 		// Is this the best way to get the textbox value?
 		// this.props.onSearchTermSubmit(event.target[0].value);
 
 		// Using refs:
 		// this.props.onSearchTermSubmit(this.textInput.value);
-
+		this.populateGrid(this.state.searchTerm);
 		this.props.onSearchTermSubmit();
 	}
 
 	render() {
 		return (
 			<div className="SearchBar">
-				<h1>SearchBar</h1>
 				<form onSubmit={this.handleSearchTermSubmit}>
 					{/* <input type="text" /> */}
 					{/* <input type="text" ref={(input) => this.textInput = input} /> */}
@@ -33,11 +42,13 @@
 					<button type="button">Random (doesn't do anything)</button> */}
 
 					<div className="jumbotron">
-					<h1 role="button" data-toggle="collapse" data-target="#collapseHeader" aria-expanded="true" aria-controls="collapseHeader">Search match/player</h1>
+						<h1 role="button" data-toggle="collapse" data-target="#collapseHeader" aria-expanded="true" aria-controls="collapseHeader">
+							Search match/player
+						</h1>
 						<div className="collapse" id="collapseHeader">
 							<div className="form-horizontal">
 								<div className="form-group">
-									<label className="col-md-2 control-label" htmlFor="Match_ID">Match IDaa</label>
+									<label className="col-md-2 control-label" htmlFor="Match_ID">Match ID</label>
 									<div className="col-md-10">
 										<input className="form-control" id="matchID" name="Match ID" type="text" onChange={this.handleSearchTermChange} />
 									</div>

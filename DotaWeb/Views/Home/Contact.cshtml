@@ -19,6 +19,8 @@
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 	</div>*@
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script language="javascript" type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script>
 	var acc = document.getElementsByClassName("accordion");
 	var i;
@@ -34,6 +36,17 @@
 			}
 		});
 	}
+</script>
+<script>
+	$(document).ready(function () {
+		// Accordion is collapsed by default
+		$("h1").trigger("click");
+
+		// Collapse when postback
+		if (document.referrer.indexOf(document.location.href) == 0) {
+			$("h1").trigger("click");
+		}
+	});
 </script>
 
 <div id="myContainer"></div>
