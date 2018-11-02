@@ -1,4 +1,4 @@
-﻿import {SearchBar as TheBar} from './SearchBar';
+﻿// import SearchBar from './SearchBar';
 
 class ProductsList extends React.Component {
 	constructor() {
@@ -52,7 +52,7 @@ class ProductsList extends React.Component {
 	BuildTable(rows) {
 		return (
 			<section>
-				<TheBar
+				<SearchBar
 					searchTerm={this.state.searchTerm}
 					onSearchTermChange={this.handleSearchTermChange}
 					onSearchTermSubmit={this.handleSearchTermSubmit} />

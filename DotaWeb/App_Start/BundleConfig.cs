@@ -28,8 +28,8 @@ namespace DotaWeb
 					  "~/Content/site.css"));
 
 			bundles.Add(new BabelBundle("~/bundles/main").Include(
-					 "~/Scripts/React/ProductList.jsx",
-					 "~/Scripts/React/SearchBar.jsx"));
+					 "~/Scripts/React/SearchBar.jsx",
+					 "~/Scripts/React/ProductList.jsx"));
 		}
 	}
 }
