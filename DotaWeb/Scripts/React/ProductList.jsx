@@ -1,4 +1,6 @@
-﻿class ProductsList extends React.Component {
+﻿import {SearchBar as TheBar} from './SearchBar';
+
+class ProductsList extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -9,16 +11,16 @@
 		this.handleSearchTermSubmit = this.handleSearchTermSubmit.bind(this);
 		this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
 	}
-  
+
 	handleSearchTermChange(searchTerm) {
-	  this.setState({searchTerm, search: false});
-	  console.log(this.state.searchTerm);
+		this.setState({ searchTerm, search: false });
+		console.log(this.state.searchTerm);
 	}
-	
+
 	handleSearchTermSubmit() {
-	  this.setState({search: true});
-	}	
-	
+		this.setState({ search: true });
+	}
+
 	handleClick(e) {
 		e.preventDefault();
 		console.log('The link was clicked.');
@@ -38,49 +40,22 @@
 		else
 			isValid = true;
 
-		if(isValid) {
+		if (isValid) {
 			axios.get("http://localhost:59206/api/products/4169885095").then(response => {
 				this.setState({
 					MatchData: response.data
 				});
 			});
 		}
-	  }
-
-	componentDidMount() {
-		
 	}
 
 	BuildTable(rows) {
 		return (
 			<section>
-				<a href="#" onClick={this.handleClick}>
-			Click me
-		  </a>
-				<div className="jumbotron">
-					<h1 role="button" data-toggle="collapse" data-target="#collapseHeader" aria-expanded="true" aria-controls="collapseHeader">Search match/player</h1>
-					<div className="collapse" id="collapseHeader">
-						<div className="form-horizontal">
-							<div className="form-group">
-								<label className="col-md-2 control-label" for="Match_ID">Match ID</label>
-								<div className="col-md-10">
-									<input className="form-control" id="matchID" name="Match ID" type="text" onChange={this.handleSearchTermChange} />
-								</div>
-							</div>
-							<div className="form-group">
-								<label className="col-md-2 control-label" for="Player_ID">Player ID</label>
-								<div className="col-md-10">
-									<input className="form-control" id="playerID" name="Player ID" type="text" />
-								</div>
-							</div>
-							<div className="form-group">
-								<div className="col-md-offset-2 col-md-10">
-									<input type="submit" id="searchButton" value="Search &raquo;" onClick={this.handleClick} className="btn btn-primary btn-lg" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+				<TheBar
+					searchTerm={this.state.searchTerm}
+					onSearchTermChange={this.handleSearchTermChange}
+					onSearchTermSubmit={this.handleSearchTermSubmit} />
 				<h1>Players Info</h1>
 				<div>
 					<table className="table">
@@ -102,7 +77,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							{rows.slice(0,5)}
+							{rows.slice(0, 5)}
 						</tbody>
 					</table>
 					<table className="table">
@@ -163,7 +138,7 @@
 				<td>
 					<img className="img-semi-circle" src={player.Backpack0Image} alt="Backpack0 Image" />
 					<img className="img-semi-circle" src={player.Backpack1Image} alt="Backpack1 Image" />
-					<img className="img-semi-circle" src={player.Backpack2Image} alt="Backpack2 Image" />	
+					<img className="img-semi-circle" src={player.Backpack2Image} alt="Backpack2 Image" />
 				</td>
 			</tr>);
 	}
@@ -178,7 +153,7 @@
 			});
 		}
 
-		return (this.BuildTable(rows))
+		return (this.BuildTable(rows));
 	}
 }
 
