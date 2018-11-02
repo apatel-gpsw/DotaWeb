@@ -11,6 +11,7 @@
 
 	handleSearchTermSubmit(event) {
 		event.preventDefault();
+		alert('asd');
 		// Is this the best way to get the textbox value?
 		// this.props.onSearchTermSubmit(event.target[0].value);
 
@@ -27,29 +28,29 @@
 				<form onSubmit={this.handleSearchTermSubmit}>
 					{/* <input type="text" /> */}
 					{/* <input type="text" ref={(input) => this.textInput = input} /> */}
-					<input type="text" onChange={this.handleSearchTermChange} />
+					{/* <input type="text" onChange={this.handleSearchTermChange} />
 					<button>Search</button>
-					<button type="button">Random (doesn't do anything)</button>
+					<button type="button">Random (doesn't do anything)</button> */}
 
 					<div className="jumbotron">
 					<h1 role="button" data-toggle="collapse" data-target="#collapseHeader" aria-expanded="true" aria-controls="collapseHeader">Search match/player</h1>
 						<div className="collapse" id="collapseHeader">
 							<div className="form-horizontal">
 								<div className="form-group">
-									<label className="col-md-2 control-label" for="Match_ID">Match IDaa</label>
+									<label className="col-md-2 control-label" htmlFor="Match_ID">Match IDaa</label>
 									<div className="col-md-10">
 										<input className="form-control" id="matchID" name="Match ID" type="text" onChange={this.handleSearchTermChange} />
 									</div>
 								</div>
 								<div className="form-group">
-									<label className="col-md-2 control-label" for="Player_ID">Player ID</label>
+									<label className="col-md-2 control-label" htmlFor="Player_ID">Player ID</label>
 									<div className="col-md-10">
 										<input className="form-control" id="playerID" name="Player ID" type="text" />
 									</div>
 								</div>
 								<div className="form-group">
 									<div className="col-md-offset-2 col-md-10">
-										<input type="submit" id="searchButton" value="Search &raquo;" onClick={this.handleClick} className="btn btn-primary btn-lg" />
+										<input type="submit" id="searchButton" value="Search &raquo;" onClick={this.handleSearchTermSubmit} className="btn btn-primary btn-lg" />
 									</div>
 								</div>
 							</div>
