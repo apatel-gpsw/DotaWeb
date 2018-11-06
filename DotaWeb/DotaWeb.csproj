@@ -251,6 +251,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -268,9 +269,11 @@
     <Compile Include="Models\MatchDetails\MatchDetailsModel.cs" />
     <Compile Include="Models\MatchDetails\AbilityUpgrade.cs" />
     <Compile Include="Models\MatchDetails\Player.cs" />
+    <Compile Include="Models\PlayerModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\SteamAccountModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\PlayerRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
