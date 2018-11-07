@@ -14,10 +14,10 @@ namespace DotaWeb.Controllers
 		}
 
 		// GET: api/Player
-		public PlayerModel Get()
-		{
-			return playerRepo.GetPlayer();
-		}
+		//public PlayerModel Get()
+		//{
+		//	return playerRepo.GetPlayer();
+		//}
 
 		[HttpGet]
 		public PlayerModel Player()

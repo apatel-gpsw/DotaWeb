@@ -48,8 +48,8 @@ class ProductsList extends React.Component {
 
 	BuildTable(rows) {
 		let matchData = this.state.MatchData;
-		let showTable = matchData.length == 0 ? { display: 'none' } : { }
-		
+		let showTable = matchData.length == 0 ? { display: 'none' } : {}
+
 		return (
 			<section>
 				<SearchBar
@@ -57,37 +57,39 @@ class ProductsList extends React.Component {
 					onSearchTermChange={this.handleSearchTermChange}
 					onSearchTermSubmit={this.handleSearchTermSubmit}
 					populateGrid={this.populateGrid} />
-				<div style={showTable}>				
-					<div style={{textAlign: "center"}}>
-						<table style={{width: "100%"}}>
-							<tr>
-								<td>
-									<label htmlFor="Lobbytype">Lobby Type: &nbsp;</label>
-									{matchData.Lobbytype}
-								</td>
-								<td>
-									<label htmlFor="Game_Mode">Game Mode: &nbsp;</label>
-									{matchData.Game_ModeStr}
-								</td>
-								<td>
-									<label htmlFor="StartTime">Game Start Time: &nbsp;</label>
-									{matchData.Start_TimeStr}
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label htmlFor="PlayedTimeAgo">Played: &nbsp;</label>
-									{matchData.PlayedTimeAgo}
-								</td>
-								<td>
-									<label htmlFor="Duration">Game Duration: &nbsp;</label>
-									{matchData.DurationStr}
-								</td>
-								<td>
-									<label htmlFor="First_Blood_TimeStr">First Blood Time: &nbsp;</label>
-									{matchData.First_Blood_TimeStr}
-								</td>
-							</tr>
+				<div style={showTable}>
+					<div style={{ textAlign: "center" }}>
+						<table style={{ width: "100%" }}>
+							<tbody>
+								<tr>
+									<td>
+										<label htmlFor="Lobbytype">Lobby Type: &nbsp;</label>
+										{matchData.Lobbytype}
+									</td>
+									<td>
+										<label htmlFor="Game_Mode">Game Mode: &nbsp;</label>
+										{matchData.Game_ModeStr}
+									</td>
+									<td>
+										<label htmlFor="StartTime">Game Start Time: &nbsp;</label>
+										{matchData.Start_TimeStr}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<label htmlFor="PlayedTimeAgo">Played: &nbsp;</label>
+										{matchData.PlayedTimeAgo}
+									</td>
+									<td>
+										<label htmlFor="Duration">Game Duration: &nbsp;</label>
+										{matchData.DurationStr}
+									</td>
+									<td>
+										<label htmlFor="First_Blood_TimeStr">First Blood Time: &nbsp;</label>
+										{matchData.First_Blood_TimeStr}
+									</td>
+								</tr>
+							</tbody>
 						</table>
 					</div>
 					<h1>Players Info</h1>
