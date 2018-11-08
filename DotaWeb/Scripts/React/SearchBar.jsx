@@ -11,6 +11,13 @@
 		this.populateGrid = this.populateGrid.bind(this);
 	}
 
+	componentDidMount() {
+		// this.header.click();
+		setTimeout(function () { //Start the timer
+			this.header.click(); //After 1 second, set render to true
+		}.bind(this), 200)
+	}
+
 	populateGrid(searchTerm) {
 		this.props.populateGrid(searchTerm);
 	}
@@ -22,6 +29,7 @@
 
 	handleSearchTermSubmit(event) {
 		event.preventDefault();
+		this.header.click();
 		// Is this the best way to get the textbox value?
 		// this.props.onSearchTermSubmit(event.target[0].value);
 
@@ -35,14 +43,8 @@
 		return (
 			<div className="SearchBar">
 				<form onSubmit={this.handleSearchTermSubmit}>
-					{/* <input type="text" /> */}
-					{/* <input type="text" ref={(input) => this.textInput = input} /> */}
-					{/* <input type="text" onChange={this.handleSearchTermChange} />
-					<button>Search</button>
-					<button type="button">Random (doesn't do anything)</button> */}
-
 					<div className="jumbotron">
-						<h1 role="button" data-toggle="collapse" data-target="#collapseHeader" aria-expanded="true" aria-controls="collapseHeader">
+						<h1 ref={input => this.header = input} role="button" data-toggle="collapse" data-target="#collapseHeader" aria-expanded="true" aria-controls="collapseHeader">
 							Search match/player
 						</h1>
 						<div className="collapse" id="collapseHeader">

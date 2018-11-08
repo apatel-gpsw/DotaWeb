@@ -37,16 +37,16 @@
 		});
 	}
 </script>
-<script>
-	$(document).ready(function () {
-		// Accordion is collapsed by default
-		$("h1").trigger("click");
-
-		// Collapse when postback
-		if (document.referrer.indexOf(document.location.href) == 0) {
+@*<script>
+		$(document).ready(function () {
+			// Accordion is collapsed by default
 			$("h1").trigger("click");
-		}
-	});
-</script>
+
+			// Collapse when postback
+			if (document.referrer.indexOf(document.location.href) == 0) {
+				$("h1").trigger("click");
+			}
+		});
+	</script>*@
 
 <div id="myContainer"></div>
