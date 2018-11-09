@@ -6,7 +6,8 @@ class ProductsList extends React.Component {
 		this.state = {
 			MatchData: [],
 			searchTerm: '',
-			search: false
+			search: false,
+			loading: false
 		}
 		this.handleSearchTermSubmit = this.handleSearchTermSubmit.bind(this);
 		this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
@@ -38,9 +39,12 @@ class ProductsList extends React.Component {
 			isValid = true;
 
 		if (isValid) {
-			axios.get("http://localhost:59206/api/products/" + searchTerm).then(response => {
-				this.setState({
-					MatchData: response.data
+			this.setState({ loading: true }, () => {
+				axios.get("http://localhost:59206/api/products/" + searchTerm).then(response => {
+					this.setState({
+						loading: false,
+						MatchData: response.data
+					});
 				});
 			});
 		}
@@ -57,6 +61,11 @@ class ProductsList extends React.Component {
 					onSearchTermChange={this.handleSearchTermChange}
 					onSearchTermSubmit={this.handleSearchTermSubmit}
 					populateGrid={this.populateGrid} />
+				{this.state.loading &&
+					<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+						<img src="../Content/Images/Invoke.gif" style={{ width: '100px', height: '100px' }} />
+					</div>
+				}
 				<div style={showTable}>
 					<div style={{ textAlign: "center" }}>
 						<table style={{ width: "100%" }}>
