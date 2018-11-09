@@ -1,6 +1,6 @@
 ﻿// import SearchBar from './SearchBar';
 
-class ProductsList extends React.Component {
+class MatchDetails extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -11,7 +11,7 @@ class ProductsList extends React.Component {
 		}
 		this.handleSearchTermSubmit = this.handleSearchTermSubmit.bind(this);
 		this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
-		this.populateGrid = this.populateGrid.bind(this);
+		this.performSearch = this.performSearch.bind(this);
 	}
 
 	handleSearchTermChange(searchTerm) {
@@ -22,7 +22,7 @@ class ProductsList extends React.Component {
 		this.setState({ search: true });
 	}
 
-	populateGrid(searchTerm) {
+	performSearch(searchTerm) {
 		// e.preventDefault();
 		var isValid = false;
 		var errorList = [];
@@ -50,104 +50,93 @@ class ProductsList extends React.Component {
 		}
 	}
 
+	ShowSpinner() {
+		return (
+			<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+				<img src="../Content/Images/Invoke.gif" style={{ width: '100px', height: '100px' }} />
+			</div>
+		);
+	}
+
 	BuildTable(rows) {
 		let matchData = this.state.MatchData;
 		let showTable = matchData.length == 0 ? { display: 'none' } : {}
 
 		return (
 			<section>
-				<SearchBar
-					searchTerm={this.state.searchTerm}
-					onSearchTermChange={this.handleSearchTermChange}
-					onSearchTermSubmit={this.handleSearchTermSubmit}
-					populateGrid={this.populateGrid} />
-				{this.state.loading &&
-					<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-						<img src="../Content/Images/Invoke.gif" style={{ width: '100px', height: '100px' }} />
-					</div>
-				}
 				<div style={showTable}>
-					<div style={{ textAlign: "center" }}>
-						<table style={{ width: "100%" }}>
-							<tbody>
-								<tr>
-									<td>
-										<label htmlFor="Lobbytype">Lobby Type: &nbsp;</label>
-										{matchData.Lobbytype}
-									</td>
-									<td>
-										<label htmlFor="Game_Mode">Game Mode: &nbsp;</label>
-										{matchData.Game_ModeStr}
-									</td>
-									<td>
-										<label htmlFor="StartTime">Game Start Time: &nbsp;</label>
-										{matchData.Start_TimeStr}
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<label htmlFor="PlayedTimeAgo">Played: &nbsp;</label>
-										{matchData.PlayedTimeAgo}
-									</td>
-									<td>
-										<label htmlFor="Duration">Game Duration: &nbsp;</label>
-										{matchData.DurationStr}
-									</td>
-									<td>
-										<label htmlFor="First_Blood_TimeStr">First Blood Time: &nbsp;</label>
-										{matchData.First_Blood_TimeStr}
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+					{this.BuildMetaTable(matchData)}
 					<h1>Players Info</h1>
-					<table className="table">
-						<thead>
-							<tr>
-								<th>Hero</th>
-								<th>Player</th>
-								<th>K</th>
-								<th>D</th>
-								<th>A</th>
-								<th>NET</th>
-								<th>LH/DN</th>
-								<th>GPM/XPM</th>
-								<th>DMG</th>
-								<th>HEAL</th>
-								<th>BLD</th>
-								<th>ITEMS</th>
-								<th>BACKPACK</th>
-							</tr>
-						</thead>
-						<tbody>
-							{rows.slice(0, 5)}
-						</tbody>
-					</table>
-					<table className="table">
-						<thead>
-							<tr>
-								<th>Hero</th>
-								<th>Player</th>
-								<th>K</th>
-								<th>D</th>
-								<th>A</th>
-								<th>NET</th>
-								<th>LH/DN</th>
-								<th>GPM/XPM</th>
-								<th>DMG</th>
-								<th>HEAL</th>
-								<th>BLD</th>
-								<th>ITEMS</th>
-								<th>BACKPACK</th>
-							</tr>
-						</thead>
-						<tbody>
-							{rows.slice(5, 10)}
-						</tbody>
-					</table>
+					{this.BuildTeamTable(rows, 'radiant')}
+					{this.BuildTeamTable(rows, 'dire')}
 				</div>
 			</section>);
+	}
+
+	BuildMetaTable(matchData) {
+		return (
+			<table style={{ width: "100%", textAlign: "center" }}>
+				<tbody>
+					<tr>
+						<td>
+							<label htmlFor="Lobbytype">Lobby Type: &nbsp;</label>
+							{matchData.Lobbytype}
+						</td>
+						<td>
+							<label htmlFor="Game_Mode">Game Mode: &nbsp;</label>
+							{matchData.Game_ModeStr}
+						</td>
+						<td>
+							<label htmlFor="StartTime">Game Start Time: &nbsp;</label>
+							{matchData.Start_TimeStr}
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label htmlFor="PlayedTimeAgo">Played: &nbsp;</label>
+							{matchData.PlayedTimeAgo}
+						</td>
+						<td>
+							<label htmlFor="Duration">Game Duration: &nbsp;</label>
+							{matchData.DurationStr}
+						</td>
+						<td>
+							<label htmlFor="First_Blood_TimeStr">First Blood Time: &nbsp;</label>
+							{matchData.First_Blood_TimeStr}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		);
+	}
+
+	BuildTeamTable(rows, team) {
+		team == 'radiant' ? rows = rows.slice(0, 5) : rows = rows.slice(5, 10);
+
+		return (
+			<table className="table">
+				<thead>
+					<tr>
+						<th>Hero</th>
+						<th>Player</th>
+						<th>K</th>
+						<th>D</th>
+						<th>A</th>
+						<th>NET</th>
+						<th>LH/DN</th>
+						<th>GPM/XPM</th>
+						<th>DMG</th>
+						<th>HEAL</th>
+						<th>BLD</th>
+						<th>ITEMS</th>
+						<th>BACKPACK</th>
+					</tr>
+				</thead>
+				<tbody>
+					{rows}
+				</tbody>
+			</table>
+		);
 	}
 
 	BuilldRows(matchData, player, index) {
@@ -197,10 +186,19 @@ class ProductsList extends React.Component {
 			});
 		}
 
-		return (this.BuildTable(rows));
+		return (
+			<div>
+				<SearchBar
+					searchTerm={this.state.searchTerm}
+					onSearchTermChange={this.handleSearchTermChange}
+					onSearchTermSubmit={this.handleSearchTermSubmit}
+					performSearch={this.performSearch} />
+				{this.state.loading ? this.ShowSpinner() : this.BuildTable(rows)}
+			</div>
+		);
 	}
 }
 
 ReactDOM.render(
-	<ProductsList />,
+	<MatchDetails />,
 	document.getElementById('myContainer'));

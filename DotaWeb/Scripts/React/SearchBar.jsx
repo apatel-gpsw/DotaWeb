@@ -8,7 +8,7 @@
 		}
 		this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
 		this.handleSearchTermSubmit = this.handleSearchTermSubmit.bind(this);
-		this.populateGrid = this.populateGrid.bind(this);
+		this.performSearch = this.performSearch.bind(this);
 	}
 
 	componentDidMount() {
@@ -18,8 +18,8 @@
 		}.bind(this), 200)
 	}
 
-	populateGrid(searchTerm) {
-		this.props.populateGrid(searchTerm);
+	performSearch(searchTerm) {
+		this.props.performSearch(searchTerm);
 	}
 
 	handleSearchTermChange(event) {
@@ -35,7 +35,7 @@
 
 		// Using refs:
 		// this.props.onSearchTermSubmit(this.textInput.value);
-		this.populateGrid(this.state.searchTerm);
+		this.performSearch(this.state.searchTerm);
 		this.props.onSearchTermSubmit();
 	}
 

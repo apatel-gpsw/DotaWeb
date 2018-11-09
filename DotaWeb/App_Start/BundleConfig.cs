@@ -29,7 +29,7 @@ namespace DotaWeb
 
 			bundles.Add(new BabelBundle("~/bundles/main").Include(
 					 "~/Scripts/React/SearchBar.jsx",
-					 "~/Scripts/React/ProductList.jsx"));
+					 "~/Scripts/React/MatchDetails.jsx"));
 		}
 	}
 }
