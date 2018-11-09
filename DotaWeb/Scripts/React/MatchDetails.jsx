@@ -50,6 +50,7 @@ class MatchDetails extends React.Component {
 		}
 	}
 
+	// Animation of loading screen
 	ShowSpinner() {
 		return (
 			<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -58,6 +59,10 @@ class MatchDetails extends React.Component {
 		);
 	}
 
+	// Builds 3 tables
+	// 1. Meta Table: Information about the game
+	// 2. Radiant Table
+	// 3. Dire Table
 	BuildTable(rows) {
 		let matchData = this.state.MatchData;
 		let showTable = matchData.length == 0 ? { display: 'none' } : {}
@@ -70,9 +75,11 @@ class MatchDetails extends React.Component {
 					{this.BuildTeamTable(rows, 'radiant')}
 					{this.BuildTeamTable(rows, 'dire')}
 				</div>
-			</section>);
+			</section>
+		);
 	}
 
+	// Building information table about the game
 	BuildMetaTable(matchData) {
 		return (
 			<table style={{ width: "100%", textAlign: "center" }}>
@@ -110,6 +117,8 @@ class MatchDetails extends React.Component {
 		);
 	}
 
+	// Each team has data shown in a tabular format
+	// First 5 rows of data are for Radiant Team and last 5 for Dire Team (Always, according to Steam APIs)
 	BuildTeamTable(rows, team) {
 		team == 'radiant' ? rows = rows.slice(0, 5) : rows = rows.slice(5, 10);
 
@@ -139,6 +148,7 @@ class MatchDetails extends React.Component {
 		);
 	}
 
+	// This is the heavy lifter function that processes data coming back from the API response
 	BuilldRows(matchData, player, index) {
 		let teamClass = index > 4 ? "dire" : "radiant";
 		let NetWorth = Math.round(player.Gold * matchData.Duration / 1000) + "K";
@@ -176,7 +186,8 @@ class MatchDetails extends React.Component {
 			</tr>);
 	}
 
-	render() {
+	// Builds the rows array by calling BuilldRows on each player object
+	BuildDataRows() {
 		let rows = [];
 		let matchData = this.state.MatchData;
 		let playersData = matchData.Players;
@@ -185,6 +196,11 @@ class MatchDetails extends React.Component {
 				rows.push(this.BuilldRows(matchData, player, i));
 			});
 		}
+		return rows;
+	}
+
+	render() {
+		let rows = this.BuildDataRows();
 
 		return (
 			<div>
