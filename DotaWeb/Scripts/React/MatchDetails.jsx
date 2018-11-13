@@ -1,5 +1,7 @@
 ﻿// import SearchBar from './SearchBar';
 
+// import { CSSTransition } from "react-transition-group";
+
 class MatchDetails extends React.Component {
 	constructor() {
 		super();
@@ -7,7 +9,8 @@ class MatchDetails extends React.Component {
 			MatchData: [],
 			searchTerm: '',
 			search: false,
-			loading: false
+			loading: false,
+			appearHome: true
 		}
 		this.handleSearchTermSubmit = this.handleSearchTermSubmit.bind(this);
 		this.handleSearchTermChange = this.handleSearchTermChange.bind(this);
@@ -39,7 +42,7 @@ class MatchDetails extends React.Component {
 			isValid = true;
 
 		if (isValid) {
-			this.setState({ loading: true }, () => {
+			this.setState({ loading: true, appearHome: !this.state.appearHome }, () => {
 				axios.get("http://localhost:59206/api/products/" + searchTerm).then(response => {
 					this.setState({
 						loading: false,
@@ -204,6 +207,16 @@ class MatchDetails extends React.Component {
 
 		return (
 			<div>
+				<react-transition-group
+					in={this.state.appearHome}
+					appear={true}
+					timeout={1000}
+					classNames="fade"
+				>
+					<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+						<img src="../Content/Images/Invoke.gif" style={{ width: '100px', height: '100px' }} />
+					</div>
+				</react-transition-group>
 				<SearchBar
 					searchTerm={this.state.searchTerm}
 					onSearchTermChange={this.handleSearchTermChange}

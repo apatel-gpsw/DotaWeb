@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 using System.Web.Optimization.React;
 
 namespace DotaWeb
@@ -27,9 +26,18 @@ namespace DotaWeb
 					  "~/Content/bootstrap.css",
 					  "~/Content/site.css"));
 
+			bundles.Add(new ScriptBundle("~/bundles/transition", "https://unpkg.com/react-transition-group@2.5.0/dist/react-transition-group.js").Include(
+						"~/Scripts/react-transition-group.js"));
+
 			bundles.Add(new BabelBundle("~/bundles/main").Include(
 					 "~/Scripts/React/SearchBar.jsx",
 					 "~/Scripts/React/MatchDetails.jsx"));
+
+			//var reactTransLoc = "https://unpkg.com/react-transition-group@2.5.0/dist/react-transition-group.js";
+			//var reactTransBundle = new ScriptBundle("~/bundles/transition", reactTransLoc).Include("~/Scripts/react-transition-group.js");
+			//bundles.Add(reactTransBundle);
+
+			BundleTable.EnableOptimizations = true;
 		}
 	}
 }

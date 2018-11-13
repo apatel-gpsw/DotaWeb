@@ -1,0 +1,4 @@
+{
+  "presets": ["@babel/preset-env", "env", "react", "latest", "stage-2"],
+  "plugins": ["transform-es2015-modules-amd"]
+}
