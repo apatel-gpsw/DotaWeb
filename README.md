@@ -95,4 +95,10 @@ https://dev.dota2.com/showthread.php?t=138016
    }
 4. Get match details using [GetMatchDetails()](https://wiki.teamfortress.com/wiki/WebAPI/GetMatchDetails). For now, only the search by match id is available.
 5. Show the match data in a tabular format on the UI.
+> API: https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?&key=api_key&match_id=4142945482&language=en
+
+TODO:
+Player Profile
+http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=api_key&steamids=76561197989505287&language=en
+
 
